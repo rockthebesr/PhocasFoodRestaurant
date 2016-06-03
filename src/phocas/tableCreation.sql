@@ -87,6 +87,13 @@ create table deliveryHasItems(
           primary key (deliveryID, itemName),
           foreign key (deliveryID) references delivery(deliveryID),
           foreign key (itemName) references item(itemName)); 
+          
+create table delivers(
+	deliveryID integer primary key,
+	orderID integer not null,
+	foreign key (deliveryID) references delivery,
+	foreign key (orderID) references allOrder);
+
 
 create table orders(
           orderID integer,
@@ -101,12 +108,6 @@ create table serves(
           primary key (menuID, itemName),
           foreign key (menuID) references menu(menuID),
           foreign key (itemName) references item(itemName)) ; 
-
-create table delivers(
-	deliveryID integer primary key,
-	orderID integer not null,
-	foreign key (deliveryID) references delivery,
-	foreign key (orderID) references allOrder);
 
 create table storeHasMenus(
 	storeID integer,
