@@ -108,3 +108,68 @@ insert into allOrder values
 insert into allOrder values
 (10, 5, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 1.75, 'finished', 11);
 
+insert into delivery values
+(1, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
+insert into delivery values
+(2, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
+insert into delivery values
+(3, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
+insert into delivery values
+(4, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
+insert into delivery values
+(5, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
+
+insert into deliveryHasItems values
+(1, 'cheeseburger');
+insert into deliveryHasItems values
+(2, 'chocolate pudding');
+insert into deliveryHasItems values
+(3, 'chocolate pudding');
+insert into deliveryHasItems values
+(4, 'fish and chips');
+insert into deliveryHasItems values
+(5, 'fish and chips');
+
+insert into deliverys values
+(1, 1);
+insert into deliverys values
+(2, 3);
+insert into deliverys values
+(3, 2);
+insert into deliverys values
+(4, 5);
+insert into deliverys values
+(5, 4);
+
+insert into storeHasMenus values
+(1,1);
+insert into storeHasMenus values
+(2,2);
+insert into storeHasMenus values
+(3,3);
+insert into storeHasMenus values
+(4,4);
+insert into storeHasMenus values
+(5,5);
+insert into storeHasMenus values
+(1,6);
+insert into storeHasMenus values
+(2,7);
+insert into storeHasMenus values
+(3,8);
+insert into storeHasMenus values
+(4,9);
+insert into storeHasMenus values
+(5,10);
+insert into storeHasMenus values
+(1,11);
+insert into storeHasMenus values
+(2,12);
+insert into storeHasMenus values
+(3,13);
+insert into storeHasMenus values
+(4,14);
+insert into storeHasMenus values
+(5,15);
+
+
