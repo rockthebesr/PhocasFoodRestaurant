@@ -108,6 +108,30 @@ insert into allOrder values
 insert into allOrder values
 (10, 5, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 1.75, 'finished', 11);
 
+insert into inStoreOrder values(1);
+insert into inStoreOrder values(2);
+insert into inStoreOrder values(3);
+insert into inStoreOrder values(4);
+insert into inStoreOrder values(5);
+
+insert into onlineOrder values(6, '8295 Scott Road', 'Simon',  6045079393);
+insert into onlineOrder values(7, '579 Yonge Street', 'Claire',  6473442637);
+insert into onlineOrder values(8, '13 Baldwin Street', 'Marcus',  4167928858);
+insert into onlineOrder values(9, '120 Lombard Avenue', 'Sameer',  6478961774);
+insert into onlineOrder values(10, '92 Front Street E', 'Ruth',  4163927219);
+
+insert into orders values(1, 'hashbrown');
+insert into orders values(2, 'cheeseburger');
+insert into orders values(3, 'coke');
+insert into orders values(4, 'fries');
+insert into orders values(5, 'tuna');
+
+insert into serves values(1, 'hashbrown');
+insert into serves values(6, 'cheeseburger');
+insert into serves values(11, 'coke');
+insert into serves values(7, 'fries');
+insert into serves values(8, 'tuna');
+
 insert into delivery values
 (1, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
 insert into delivery values
@@ -130,16 +154,16 @@ insert into deliveryHasItems values
 insert into deliveryHasItems values
 (5, 'fish and chips');
 
-insert into deliverys values
-(1, 1);
-insert into deliverys values
-(2, 3);
-insert into deliverys values
-(3, 2);
-insert into deliverys values
-(4, 5);
-insert into deliverys values
-(5, 4);
+insert into delivers values
+(1, 6);
+insert into delivers values
+(2, 7);
+insert into delivers values
+(3, 8);
+insert into delivers values
+(4, 9);
+insert into delivers values
+(5, 10);
 
 insert into storeHasMenus values
 (1,1);
@@ -171,5 +195,3 @@ insert into storeHasMenus values
 (4,14);
 insert into storeHasMenus values
 (5,15);
-
-

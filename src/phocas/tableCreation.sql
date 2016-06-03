@@ -79,7 +79,7 @@ create table onlineOrder(
 create table delivery(
           deliveryID integer primary key,
           deliveryDate date,
-          deliveryStatus varchar(3)); 
+          deliveryStatus varchar(30)); 
 
 create table deliveryHasItems(
           deliveryID integer,
