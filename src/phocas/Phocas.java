@@ -2,6 +2,7 @@ package phocas;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -18,12 +19,13 @@ public class Phocas {
 				  p.account, 
 				  p.password);
 		Statement stmt = con.createStatement();
-		int rowCount = stmt.executeUpdate("INSERT INTO branch VALUES (20, 'Richmond Main', " +
-                "'18122 No.5 Road', 'Richmond', 5252738)");
+		ResultSet row = stmt.executeQuery("select * from allOrder where empId = 3");
 
-		stmt.executeQuery("SELECT branch_id, branch_name FROM branch " +
-                "WHERE branch_city = 'Vancouver'");
-		
+		while(row.next())
+		{
+			System.out.println(row.getString("orderStatus"));
+			System.out.println(row.getInt(1));
+		}
 		System.out.println("end");
 	}
 
