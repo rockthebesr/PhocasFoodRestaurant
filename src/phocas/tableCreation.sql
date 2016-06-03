@@ -2,31 +2,65 @@ create table item(
           itemName varchar(30) primary key,
           stock integer,
           price number(10, 4)); 
-
-create table employee(
-	empID integer primary key,
-	name varchar(20),
-	gender varchar(20) );
-
-create table store(
-	storeID integer primary key,
-city varchar(30),
-province varchar(30),
-location varchar(30),
-empID integer,
-Foreign key (empID) references employee(empID)); 
-
+          
+          
 create table menu(
 	menuID integer primary key,
 	serveStartTime integer,
 	serveEndTime integer);
+
+
+create table dayTimeMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu);
+
+create table breakfastMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu);
+
+create table drinkMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu);
+    
+create table employee(
+	empID integer primary key,
+	ename varchar(20),
+	gender varchar(20));
+    
+create table manager(
+	empID integer primary key,
+	foreign key (empID) references employee(empID) );
+    
+    
+create table store(
+	storeID integer primary key,
+	city varchar(30),
+	province varchar(30),
+	location varchar(30),
+	empID integer,
+Foreign key (empID) references manager(empID)); 
+
+create table regularEmployee(
+	empID integer primary key,
+	storeID integer,
+	managerID integer,
+	Foreign key (empID) references employee,
+	Foreign key (storeID) references store,
+	Foreign key (managerID) references manager);
+
+create table manages(
+	empID integer primary key,
+	storeID integer not null,
+	foreign key (empID) references manager,
+	foreign key (storeID) references store );
+
 
 create table allOrder(
 	orderID integer primary key,
 	storeID integer not null,
 	orderDate date,
 	price number(10,4),
-	orderStatus varchar(20),
+	orderStatus varchar(20) CHECK (orderStatus IN ('in preparation', 'out on delivery', 'delivered', 'finished', 'cancelled')),
 	empID integer not null,
 	foreign key (storeID) references store,
 	foreign key (empID) references employee );
@@ -68,16 +102,6 @@ create table serves(
           foreign key (menuID) references menu(menuID),
           foreign key (itemName) references item(itemName)) ; 
 
-create table manager(
-	empID integer primary key,
-	foreign key (empID) references employee(empID) );
-
-create table manages(
-	empID integer primary key,
-	storeID integer not null,
-	foreign key (empID) references manager,
-	foreign key (storeID) references store );
-
 create table delivers(
 	deliveryID integer primary key,
 	orderID integer not null,
@@ -92,22 +116,3 @@ create table storeHasMenus(
 	primary key (storeID, menuID) );
 
 
-create table dayTimeMenu(
-	menuID integer primary key,
-	foreign key (menuID) references menu);
-
-create table breakfastMenu(
-	menuID integer primary key,
-	foreign key (menuID) references menu);
-
-create table drinkMenu(
-	menuID integer primary key,
-	foreign key (menuID) references menu);
-
-create table regularEmployee(
-	empID integer primary key,
-	storeID integer,
-	managerID integer,
-	Foreign key (empID) references employee,
-	Foreign key (storeID) references store,
-	Foreign key (managerID) references manager);
