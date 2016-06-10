@@ -28,31 +28,59 @@ public class Phocas {
 		System.out.println("start");
 		Connection con = Po.start();
 		Statement stmt = con.createStatement();
-		int rowCount = stmt.executeUpdate("INSERT INTO branch VALUES (20, 'Richmond Main', " +
+		stmt.executeUpdate(Po.addItem("cheeseburger", 5, 6));
+		/*int rowCount = stmt.executeUpdate("INSERT INTO branch VALUES (20, 'Richmond Main', " +
                 "'18122 No.5 Road', 'Richmond', 5252738)");
 
 		stmt.executeQuery("SELECT branch_id, branch_name FROM branch " +
-                "WHERE branch_city = 'Vancouver'");
+                "WHERE branch_city = 'Vancouver'");*/
 		
 		System.out.println("end");
 	}
 
 	
-	public String AddItem(String itemName, int stock, int price){
-		String query= null;
-		
+	public String addItem(String itemName, int stock, int price){
+		String query= "INSERT INTO item values( '"+itemName +"', "+ stock+", "+price+ ");";
 		return query;
 	}
 	
-	public String SearchItem(String itemName, int stock, int price){
-		String query= null;
-		
+	public String deleteItem(String Condition){
+		String query= "DELETE FROM item WHERE "+Condition;
 		return query;
 	}
 	
-	public String ProjectItem(boolean itemName){
-		String query= null;
-		
+	
+	public String queryItem(boolean itemName, boolean stock, boolean price, String itemNameCondition, String stockCondition, String priceCondition){
+		String query=projectItem(itemName, stock, price)+" FROM item "+selectItem(itemNameCondition, stockCondition, priceCondition);
+		return query;
+	}
+	
+	private String selectItem(String itemNameCondition, String stockCondition, String priceCondition){
+		String query="";
+		if(!(itemNameCondition.equals("")||stockCondition.equals("")||priceCondition.equals(""))){
+			query= "WHERE "+itemNameCondition+stockCondition+priceCondition;
+		}
+		return query;
+	}
+	
+	private String projectItem(boolean itemName, boolean stock, boolean price){
+		String itemNameStr=" ", stockStr= " ", priceStr = " ";
+		if(itemName) itemNameStr = "itemName ";
+		if(stock) {
+			if(itemName)
+			stockStr =",stock ";
+			else{
+				stockStr= "stock ";
+			}
+		}
+		if(price) {
+			if(itemName||stock){
+				priceStr=",price ";
+			}else{
+			priceStr ="price ";
+			}
+		}
+		String query= "SELECT "+itemNameStr+stockStr+priceStr;
 		return query;
 	}
 }
