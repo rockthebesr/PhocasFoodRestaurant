@@ -11,61 +11,11 @@ import java.sql.Statement;
 
 public class Phocas {
 
-    Connection con;
-    Statement stmt;
-
 	public static void main(String[] args) throws SQLException {
-		PrivateInfo p = new PrivateInfo();
-		// TODO Auto-generated method stub
-		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-		System.out.println("start");
-		Connection con = DriverManager.getConnection(
-				  "jdbc:oracle:thin:@localhost:1522:ug", 
-				  p.account, 
-				  p.password);
-		Statement stmt = con.createStatement();
-		ResultSet row = stmt.executeQuery("select * from allOrder where empId = 3");
-
-		while(row.next())
-		{
-			System.out.println(row.getString("orderStatus"));
-			System.out.println(row.getInt(1));
-		}
-		System.out.println("end");
+		//ssh CSID@remote.ugrad.cs.ubc.ca -L 1522:dbhost.ugrad.cs.ubc.ca:1522
+		Database db = new Database();
+		System.out.println("connected");
 
 	}
-
-    public void connect() {
-        PrivateInfo p = new PrivateInfo();
-        // TODO Auto-generated method stub
-        try {
-            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            System.out.println("start");
-            Connection con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@localhost:1522:ug",
-                    p.account,
-                    p.password);
-        } catch (SQLException e) {
-            System.out.println("Failed to connect");
-        }
-    }
-
-    public void update(String s) {
-        try {
-            stmt.executeUpdate(s);
-        } catch (SQLException e) {
-            System.out.println("Update failed");
-        }
-    }
-
-    public ResultSet query(String s) {
-        ResultSet rs = null;
-        try {
-            stmt.executeQuery(s);
-        } catch (SQLException e) {
-            System.out.print("Query failed");
-        }
-        return rs;
-    }
 
 }
