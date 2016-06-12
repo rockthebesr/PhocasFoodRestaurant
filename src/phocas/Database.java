@@ -1,6 +1,7 @@
 package phocas;
 
 import java.awt.*;
+import javax.swing.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
@@ -20,9 +21,9 @@ public class Database {
                     p.account,
                     p.password);
             stmt = con.createStatement();
-            System.out.println("connected");
+            JOptionPane.showMessageDialog(null, "connected");
         } catch (SQLException e) {
-            System.out.println("Failed to connect");
+        	JOptionPane.showMessageDialog(null, "failed to connect");
         }
     }
 

@@ -13,6 +13,7 @@ public class Phocas {
 
 	public static void main(String[] args) throws SQLException {
 		//ssh CSID@remote.ugrad.cs.ubc.ca -L 1522:dbhost.ugrad.cs.ubc.ca:1522
+		PhocasGUI.main(new String[]{});
 		Database db = new Database();
 		System.out.println("connected");
 
