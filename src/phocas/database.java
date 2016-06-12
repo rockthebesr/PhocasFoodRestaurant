@@ -86,13 +86,13 @@ public class Database {
 
     public void fulfillInStoreOrder(int orderID) throws SQLException {
         
-        this.update("Update allOrders set orderStatus = 'finished' where orderID = " + orderID + ")");
+        this.update("Update allOrders set orderStatus = 'finished' where orderID = " + orderID);
         System.out.println("Order Finished");
     }
 
     public void cancelInStoreOrder(int orderID) throws SQLException {
             
-            this.update("Update allOrders set orderStatus = 'cancelled' where orderID = " + orderID + " )");
+            this.update("Update allOrders set orderStatus = 'cancelled' where orderID = " + orderID);
             System.out.println("Order Cancelled");
 
     }
@@ -146,7 +146,7 @@ public class Database {
             }
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             this.update("Insert into delivery values(" + deliveryID + ", " + dateFormat + ", 'out on delivery')");
-            this.update("Insert into delivers values(" + deliveryID + ", " + orderID);
+            this.update("Insert into delivers values(" + deliveryID + ", " + orderID + ")");
             rs = this.query("Select itemName from orders where orderID = " + orderID);
             String itemName = null;
             if (rs.next()) {
@@ -227,7 +227,7 @@ public class Database {
 
     public void addItem(String itemName, double cost) {
         
-        this.update("Insert into item values('" + itemName + "', 0," + cost);
+        this.update("Insert into item values('" + itemName + "', 0," + cost + ")");
         System.out.println(itemName + " has been added");
     }
 
@@ -240,9 +240,9 @@ public class Database {
     public void addStore(int storeID, String city, String province, String location, int managerID, int menuID) {
         
         this.update("Insert into store values(" + storeID +
-                ", '" + city + "', '" + province + "', '" + location + "'");
-        this.update("Insert into manages values(" + managerID + ", " + storeID);
-        this.update("Insert into manages values(" + storeID + ", " + menuID);
+                ", '" + city + "', '" + province + "', '" + location + "')");
+        this.update("Insert into manages values(" + managerID + ", " + storeID + ")");
+        this.update("Insert into manages values(" + storeID + ", " + menuID + ")");
         System.out.println("Store has been added");
     }
 
@@ -253,8 +253,8 @@ public class Database {
             rs.next();
             rs = this.query("Select managerID from manager where storeID = " + storeID);
             rs.next();
-             this.update("Insert into employee values(" + empID + " ,'" + name + "' ,'" + gender + "'");
-             this.update("Insert into regularEmployee values(" + empID + " ," + storeID + " ," + managerID);
+             this.update("Insert into employee values(" + empID + " ,'" + name + "' ,'" + gender + "')");
+             this.update("Insert into regularEmployee values(" + empID + " ," + storeID + " ," + managerID + ")");
         } catch (SQLException e) {
             System.out.println("Store or manager doesn't exist.");
         }
