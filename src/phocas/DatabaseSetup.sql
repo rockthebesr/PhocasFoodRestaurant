@@ -1,3 +1,143 @@
+//drop tables
+drop table manages;
+drop table delivers;
+drop table storeHasMenus;
+drop table dayTimeMenu;
+drop table breakfastMenu;
+drop table drinkMenu;
+drop table regularEmployee;
+drop table serves;
+drop table deliveryHasItems;
+drop table inStoreOrder;
+drop table onlineOrder;
+drop table item;
+drop table employee;
+drop table store;
+drop table menu;
+drop table allOrder;
+drop table delivery;
+drop table orders;
+drop table manager;
+
+//table creation
+create table item(
+          itemName varchar(30) primary key,
+          stock integer,
+          price number(10, 4)); 
+          
+          
+create table menu(
+	menuID integer primary key,
+	serveStartTime integer,
+	serveEndTime integer);
+
+
+create table dayTimeMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu ON DELETE CASCADE);
+
+create table breakfastMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu ON DELETE CASCADE);
+
+create table drinkMenu(
+	menuID integer primary key,
+	foreign key (menuID) references menu ON DELETE CASCADE);
+    
+create table employee(
+	empID integer primary key,
+	ename varchar(20),
+	gender varchar(20));
+    
+create table manager(
+	empID integer primary key,
+	foreign key (empID) references employee(empID) ON DELETE CASCADE );
+    
+    
+create table store(
+	storeID integer primary key,
+	city varchar(30),
+	province varchar(30),
+	location varchar(30),
+	empID integer,
+Foreign key (empID) references manager(empID) ON DELETE SET NULL); 
+
+create table regularEmployee(
+	empID integer primary key,
+	storeID integer,
+	managerID integer,
+	Foreign key (empID) references employee ON DELETE CASCADE,
+	Foreign key (storeID) references store ON DELETE SET NULL,
+	Foreign key (managerID) references manager ON DELETE SET NULL);
+
+create table manages(
+	empID integer primary key,
+	storeID integer not null,
+	foreign key (empID) references manager ON DELETE CASCADE,
+	foreign key (storeID) references store ON DELETE CASCADE);
+
+
+create table allOrder(
+	orderID integer primary key,
+	storeID integer not null,
+	orderDate date,
+	price number(10,4),
+	orderStatus varchar(20) CHECK (orderStatus IN ('in preparation', 'out on delivery', 'delivered', 'finished', 'cancelled')),
+	empID integer not null,
+	foreign key (storeID) references store ON DELETE CASCADE,
+	foreign key (empID) references employee ON DELETE SET NULL);
+
+create table inStoreOrder(
+	orderID integer primary key,
+	foreign key (orderID) references allOrder ON DELETE CASCADE);
+
+create table onlineOrder(
+	orderID integer primary key,
+	address varchar(20),
+	customerName varchar(20),
+	phoneNumber integer,
+	foreign key (orderID) references allOrder ON DELETE CASCADE);
+
+create table delivery(
+          deliveryID integer primary key,
+          deliveryDate date,
+          deliveryStatus varchar(30)); 
+
+create table deliveryHasItems(
+          deliveryID integer,
+          itemName varchar(30),
+          primary key (deliveryID, itemName),
+          foreign key (deliveryID) references delivery(deliveryID) ON DELETE CASCADE,
+          foreign key (itemName) references item(itemName) ON DELETE CASCADE); 
+          
+create table delivers(
+	deliveryID integer primary key,
+	orderID integer not null,
+	foreign key (deliveryID) references delivery ON DELETE CASCADE,
+	foreign key (orderID) references allOrder ON DELETE CASCADE);
+
+
+create table orders(
+          orderID integer,
+          itemName varchar(30),
+          primary key (orderID, itemName),
+          foreign key (orderID) references allOrder(orderID) ON DELETE CASCADE,
+          foreign key (itemName) references item(itemName) ON DELETE CASCADE); 
+
+create table serves(
+          menuID integer,
+          itemName varchar(30),
+          primary key (menuID, itemName),
+          foreign key (menuID) references menu(menuID) ON DELETE CASCADE,
+          foreign key (itemName) references item(itemName) ON DELETE CASCADE); 
+
+create table storeHasMenus(
+	storeID integer,
+	menuID integer,
+	Foreign key (storeID) references store ON DELETE CASCADE,
+	Foreign key (menuID) references menu ON DELETE CASCADE,
+	primary key (storeID, menuID) );
+
 //drinks
 insert into item values('molson canadian', 7, 10);
 insert into item values('rootbeer float', 4, 3.5);
@@ -300,4 +440,5 @@ insert into orders values(22, 'buffalo chicken sandwich');
 insert into orders values(22, 'jalapeno popper');
 insert into orders values(23, 'coleslaw');
 insert into orders values(24, 'pina colada');
+
 
