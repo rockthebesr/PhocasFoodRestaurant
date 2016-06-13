@@ -28,6 +28,14 @@ public class Database {
         	JOptionPane.showMessageDialog(null, "failed to connect");
         }
     }
+    
+    public void disconnect() {
+    	try {
+			con.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "connection failed to close");
+		}
+    }
 
     public ResultSet query(String queryString) {
     	  ResultSet rs = null;
@@ -264,14 +272,16 @@ public class Database {
     }
     
     public Boolean existEmployee(String name, String empID) {
-    	String q = "select * from employee where ename = '" + name + "' and empID = " + empID;
+    	String q = "SELECT * FROM employee WHERE ename = '" + name + "' AND empID = " + empID;
     	ResultSet rs = this.query(q);
     	Boolean b = false;
     	try {
-    		rs.next();
-    		b = true;
+    		while(rs.next()) {
+    			JOptionPane.showMessageDialog(null, "Welcome, " + rs.getString("ename"));
+    		}
     	} catch(SQLException e) {
-    		System.out.println("employee does not exist");
+    		b = false;
+    		return b;
     	}
     	return b;
     }
