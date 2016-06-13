@@ -282,22 +282,22 @@ public class Database {
     
     public void deleteEmployee(String Condition){
 		String query= "DELETE FROM employee WHERE "+Condition;
-		ResultSet rs= query(query);
+		update(query);
 	}
     
-	public ResultSet queryItem(boolean itemName, boolean stock, boolean price, String itemNameCondition, String stockCondition, String priceCondition){
+	public ResultSet queryItem(boolean itemName, boolean stock, boolean price, String condition){
 		String query=projectItem(itemName, stock, price)+" FROM item ";
-		if(itemNameCondition.equals("")&&stockCondition.equals("")&&priceCondition.equals(""))
-			query = query+selectItem(itemNameCondition, stockCondition, priceCondition);
+		if(!condition.equals(""))
+			query = query+selectItem(condition);
 		ResultSet rs = query(query);
 		return rs;
 		//need to output this
 	}
 	
-	private String selectItem(String itemNameCondition, String stockCondition, String priceCondition){
+	private String selectItem(String condition){
 		String query="";
-		if(!(itemNameCondition.equals("")||stockCondition.equals("")||priceCondition.equals(""))){
-			query= "WHERE "+itemNameCondition+stockCondition+priceCondition;
+		if(!(condition.equals(""))){
+			query= "WHERE "+condition;
 		}
 		return query;
 	}
@@ -321,6 +321,19 @@ public class Database {
 		}
 		String query= "SELECT "+itemNameStr+stockStr+priceStr;
 		return query;
+	}
+	
+	public ResultSet SaleOfEachStore(){
+		ResultSet rs = null;
+		String query ="Select storeID, SUM(price) From allOrder Group By storeID";
+		rs=query(query);
+		return rs;
+	}
+	
+	public ResultSet MaxMinPrice(){
+		ResultSet rs = null;
+		
+		return rs;
 	}
 }
 
