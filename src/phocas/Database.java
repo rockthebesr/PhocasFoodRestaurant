@@ -1,6 +1,9 @@
 package phocas;
 
 import java.awt.*;
+
+import javax.swing.*;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
@@ -20,9 +23,9 @@ public class Database {
                     p.account,
                     p.password);
             stmt = con.createStatement();
-            System.out.println("connected");
+            JOptionPane.showMessageDialog(null, "connected");
         } catch (SQLException e) {
-            System.out.println("Failed to connect");
+        	JOptionPane.showMessageDialog(null, "failed to connect");
         }
     }
 
@@ -258,6 +261,20 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Store or manager doesn't exist.");
         }
+    }
+    
+    public Boolean existEmployee(String name, String empID) {
+    	String q = "select * from employee where ename = " + name + "and empID = " + empID;
+    	ResultSet rs = this.query(q);
+    	try {
+			return rs.next();
+		} catch (Exception e) {
+			return false;
+		}
+    }
+    
+    public Boolean existEmployee(String name, int empID) {
+    	return existEmployee(name, Integer.toString(empID));
     }
 }
 
