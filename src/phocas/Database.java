@@ -366,5 +366,18 @@ public class Database {
         ResultSet rs = this.query(query);
         return rs;
     }
+    
+        public void addMenu(int menuID, int serveStartTime, int serveEndTime) {
+        String query = "Insert into menu values(" + menuID + ", " + serveStartTime + ", " + serveEndTime;
+        this.update(query);
+        System.out.println("Menu " + menuID + " has been added");
+    }
+
+    public void deleteMenu(int menuID) {
+        String query = "delete from menu where menuID = " + menuID;
+        this.update(query);
+        System.out.println("Menu " + menuID + " has been added");
+    }
+    
 }
 
