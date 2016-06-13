@@ -264,7 +264,7 @@ public class Database {
     }
     
     public Boolean existEmployee(String name, String empID) {
-    	String q = "select * from employee where ename = " + name + "and empID = " + empID;
+    	String q = "select * from employee where ename = " + name + "and empID = " + empID+";";
     	ResultSet rs = this.query(q);
     	try {
 			return rs.next();
@@ -276,5 +276,48 @@ public class Database {
     public Boolean existEmployee(String name, int empID) {
     	return existEmployee(name, Integer.toString(empID));
     }
+    
+    public void deleteEmployee(String Condition){
+		String query= "DELETE FROM employee WHERE "+Condition+";";
+		ResultSet rs= query(query);
+	}
+    
+	public ResultSet queryItem(boolean itemName, boolean stock, boolean price, String itemNameCondition, String stockCondition, String priceCondition){
+		String query=projectItem(itemName, stock, price)+" FROM item ";
+		if(itemNameCondition.equals("")&&stockCondition.equals("")&&priceCondition.equals(""))
+			query = query+selectItem(itemNameCondition, stockCondition, priceCondition);
+		ResultSet rs = query(query);
+		return rs;
+		//need to output this
+	}
+	
+	private String selectItem(String itemNameCondition, String stockCondition, String priceCondition){
+		String query="";
+		if(!(itemNameCondition.equals("")||stockCondition.equals("")||priceCondition.equals(""))){
+			query= "WHERE "+itemNameCondition+stockCondition+priceCondition+";";
+		}
+		return query;
+	}
+	
+	private String projectItem(boolean itemName, boolean stock, boolean price){
+		String itemNameStr=" ", stockStr= " ", priceStr = " ";
+		if(itemName) itemNameStr = "itemName ";
+		if(stock) {
+			if(itemName)
+			stockStr =",stock ";
+			else{
+				stockStr= "stock ";
+			}
+		}
+		if(price) {
+			if(itemName||stock){
+				priceStr=",price ";
+			}else{
+			priceStr ="price ";
+			}
+		}
+		String query= "SELECT "+itemNameStr+stockStr+priceStr;
+		return query;
+	}
 }
 
