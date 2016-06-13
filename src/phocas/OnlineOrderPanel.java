@@ -1,17 +1,19 @@
 package phocas;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextArea;
 
 public class OnlineOrderPanel extends JPanel {
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -27,22 +29,9 @@ public class OnlineOrderPanel extends JPanel {
 		setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("City");
-		lblNewLabel.setBounds(28, 75, 61, 16);
-		add(lblNewLabel);
-		
 		JLabel lblOnlineOrder = new JLabel("Make An Online Order");
 		lblOnlineOrder.setBounds(162, 41, 159, 16);
 		add(lblOnlineOrder);
-		
-		textField = new JTextField();
-		textField.setBounds(187, 69, 317, 28);
-		add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Province");
-		lblNewLabel_1.setBounds(28, 103, 61, 16);
-		add(lblNewLabel_1);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(187, 97, 317, 28);
@@ -95,8 +84,33 @@ public class OnlineOrderPanel extends JPanel {
 		textField_6.setColumns(10);
 		
 		JButton btnOrder = new JButton("ORDER!");
+		btnOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String empID = textField_1.getText();
+				String storeID = textField_2.getText();
+				String items = textField_3.getText();
+				String name = textField_4.getText();
+				String address = textField_5.getText();
+				String phone = textField_6.getText();
+				if (empID.isEmpty() 
+						|| storeID.isEmpty()
+						||items.isEmpty()
+						||name.isEmpty()
+						||address.isEmpty()
+						||phone.isEmpty()
+						) {
+					JOptionPane.showMessageDialog(null, "At least one of the information is empty!");
+				} else {
+					
+				}
+			}
+		});
 		btnOrder.setBounds(204, 295, 117, 29);
 		add(btnOrder);
+		
+		JLabel lblEmpId = new JLabel("emp ID");
+		lblEmpId.setBounds(28, 103, 61, 16);
+		add(lblEmpId);
 
 	}
 }

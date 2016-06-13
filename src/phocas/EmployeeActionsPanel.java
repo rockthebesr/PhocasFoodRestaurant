@@ -46,6 +46,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	private JButton btnAddMenu;
 	private JTextField txtMenuIdToDelete;
 	private JButton btnDeleteMenu;
+	private JButton btnSalesOfEach;
+	private JButton btnSalesOfEach_1;
+	private JButton btnMostExpensiveItem;
+	private JButton btnLeastExpensiveItem;
 
 	/**
 	 * Create the panel.
@@ -313,6 +317,22 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		btnFindTheStores = new JButton("Find the stores that has all the menus");
 		btnFindTheStores.setBounds(6, 98, 292, 29);
 		AdditionalInfoPanel.add(btnFindTheStores);
+		
+		btnSalesOfEach = new JButton("Sales of each store");
+		btnSalesOfEach.setBounds(333, 98, 206, 29);
+		AdditionalInfoPanel.add(btnSalesOfEach);
+		
+		btnSalesOfEach_1 = new JButton("Sales of each province");
+		btnSalesOfEach_1.setBounds(333, 128, 206, 29);
+		AdditionalInfoPanel.add(btnSalesOfEach_1);
+		
+		btnMostExpensiveItem = new JButton("Most expensive item");
+		btnMostExpensiveItem.setBounds(6, 128, 158, 29);
+		AdditionalInfoPanel.add(btnMostExpensiveItem);
+		
+		btnLeastExpensiveItem = new JButton("Least expensive item");
+		btnLeastExpensiveItem.setBounds(161, 128, 167, 29);
+		AdditionalInfoPanel.add(btnLeastExpensiveItem);
 
 	}
 	
