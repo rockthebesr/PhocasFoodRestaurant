@@ -281,7 +281,7 @@ public class Database {
     }
     
     public void deleteEmployee(String Condition){
-		String query= "DELETE FROM employee WHERE "+Condition+";";
+		String query= "DELETE FROM employee WHERE "+Condition;
 		ResultSet rs= query(query);
 	}
     
@@ -297,7 +297,7 @@ public class Database {
 	private String selectItem(String itemNameCondition, String stockCondition, String priceCondition){
 		String query="";
 		if(!(itemNameCondition.equals("")||stockCondition.equals("")||priceCondition.equals(""))){
-			query= "WHERE "+itemNameCondition+stockCondition+priceCondition+";";
+			query= "WHERE "+itemNameCondition+stockCondition+priceCondition;
 		}
 		return query;
 	}
