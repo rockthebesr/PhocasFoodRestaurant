@@ -376,7 +376,7 @@ public class Database {
     public void deleteMenu(int menuID) {
         String query = "delete from menu where menuID = " + menuID;
         this.update(query);
-        System.out.println("Menu " + menuID + " has been added");
+        System.out.println("Menu " + menuID + " has been deleted");
     }
     
 }
