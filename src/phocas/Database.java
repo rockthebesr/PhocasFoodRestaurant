@@ -345,5 +345,22 @@ public class Database {
 		
 		return rs;
 	}
+	    //find all employees who work at storeID
+    public ResultSet joinEmpStore (int storeID) {
+        String query = "Select e.empID from regularemployee e, store s " +
+                "where e.storeID = s.storeID and e.storeID = " + storeID;
+        ResultSet rs = this.query(query);
+        return rs;
+    }
+
+    //divison query
+    //find all store which have all menus
+    public ResultSet findStoreAllMenu() {
+        String query = "Select s.storeID from store s where not exists" +
+                " ((select m.menuID from menu m) " +
+                "minus (select h.menuID from storehasmenus h where h.storeID=s.storeID))";
+        ResultSet rs = this.query(query);
+        return rs;
+    }
 }
 
