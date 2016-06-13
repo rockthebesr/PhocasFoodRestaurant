@@ -332,14 +332,21 @@ public class Database {
 		String query= "SELECT "+itemNameStr+stockStr+priceStr;
 		return query;
 	}
-	
+	//show sales of each store
 	public ResultSet SaleOfEachStore(){
 		ResultSet rs = null;
 		String query ="Select storeID, SUM(price) From allOrder Group By storeID";
 		rs=query(query);
 		return rs;
 	}
-	
+	//sales of each province
+	public ResultSet SaleOfEachProvince(){
+		ResultSet rs = null;
+		String query ="Select Province, SUM(price) From allOrder Group By Province";
+		rs=query(query);
+		return rs;
+	}
+	//find max or min priced-item
 	public ResultSet MaxMinPrice(String condition){
 		ResultSet rs = null;
 		if(condition.equalsIgnoreCase("max")){
@@ -365,6 +372,23 @@ public class Database {
                 "minus (select h.menuID from storehasmenus h where h.storeID=s.storeID))";
         ResultSet rs = this.query(query);
         return rs;
+    }
+    //toString method of ResultSet
+    public String ResultSetToString(ResultSet rs){
+    	String result = null;
+    	try{
+    		ResultSetMetaData rsmd = rs.getMetaData();
+    		int columnsNumber = rsmd.getColumnCount();
+    		while (rs.next()) {
+    			for (int i = 1; i <= columnsNumber; i++) {
+    				String columnValue = rs.getString(i);
+    				result+=columnValue + " " + rsmd.getColumnName(i)+"\n" ;
+    			}
+    		}
+    	}catch(SQLException e){
+    		result ="Query Failed";
+    	}
+    	return result;
     }
 }
 
