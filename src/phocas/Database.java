@@ -340,9 +340,13 @@ public class Database {
 		return rs;
 	}
 	
-	public ResultSet MaxMinPrice(){
+	public ResultSet MaxMinPrice(String condition){
 		ResultSet rs = null;
-		
+		if(condition.equalsIgnoreCase("max")){
+			rs=query("Select itemName, MAX(price) From item");
+		}else if(condition.equalsIgnoreCase("min")){
+			rs=query("Select itemName, MIN(price) From item");
+		}
 		return rs;
 	}
 	    //find all employees who work at storeID
