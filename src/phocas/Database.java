@@ -264,13 +264,16 @@ public class Database {
     }
     
     public Boolean existEmployee(String name, String empID) {
-    	String q = "select * from employee where ename = " + name + "and empID = " + empID+";";
+    	String q = "select * from employee where ename = '" + name + "' and empID = " + empID;
     	ResultSet rs = this.query(q);
+    	Boolean b = false;
     	try {
-			return rs.next();
-		} catch (Exception e) {
-			return false;
-		}
+    		rs.next();
+    		b = true;
+    	} catch(SQLException e) {
+    		System.out.println("employee does not exist");
+    	}
+    	return b;
     }
     
     public Boolean existEmployee(String name, int empID) {
