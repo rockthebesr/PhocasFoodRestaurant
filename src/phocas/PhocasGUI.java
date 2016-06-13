@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.JTextField;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class PhocasGUI extends JFrame {
 
@@ -38,12 +40,18 @@ public class PhocasGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PhocasGUI(Database db) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				db.disconnect();
+			}
+		});
 		this.db = db;
 		
 		onlineOrderPanel = new OnlineOrderPanel();
 		managerActionsPanel = new EmployeeActionsPanel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 476, 360);
+		setBounds(100, 100, 528, 392);
 		homePanel = new JPanel();
 		homePanel.setBackground(new Color(204, 255, 255));
 		homePanel.setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -61,13 +69,13 @@ public class PhocasGUI extends JFrame {
 				System.out.println("clicked");
 			}
 		});
-		btnMakeAnOnline.setBounds(80, 95, 286, 29);
+		btnMakeAnOnline.setBounds(121, 95, 286, 29);
 		homePanel.add(btnMakeAnOnline);
 
 		
 		JLabel lblWelcomeToPhocas = new JLabel("Welcome To Phocas!");
 		lblWelcomeToPhocas.setFont(new Font("Hoefler Text", Font.BOLD | Font.ITALIC, 30));
-		lblWelcomeToPhocas.setBounds(101, 35, 246, 48);
+		lblWelcomeToPhocas.setBounds(161, 35, 246, 48);
 		homePanel.add(lblWelcomeToPhocas);
 		
 		txtEmployeeName = new JTextField();
@@ -94,25 +102,28 @@ public class PhocasGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String name = txtEmployeeName.getText();
 				String id = txtEmployeeID.getText();
-				Boolean empExist = db.existEmployee(name, id);
-				if (empExist) {
-					homePanel.removeAll();
-					homePanel.setLayout(new java.awt.BorderLayout());
-					homePanel.add(managerActionsPanel);
-					homePanel.revalidate();
-					homePanel.repaint();
+				if (!name.isEmpty() && !id.isEmpty()) {
+					Boolean empExist = db.existEmployee(name, id);
+					if (empExist) {
+						homePanel.removeAll();
+						homePanel.setLayout(new java.awt.BorderLayout());
+						homePanel.add(managerActionsPanel);
+						homePanel.revalidate();
+						homePanel.repaint();
+					} else {
+						JOptionPane.showMessageDialog(null, "Employee does not exist!");
+					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Employee does not exist!");
+					JOptionPane.showMessageDialog(null, "Please enter your name and employee id!");
 				}
-				System.out.println("clicked");
 			}
 		});
-		btnLogInAs.setBounds(80, 277, 286, 29);
+		btnLogInAs.setBounds(121, 281, 286, 29);
 		homePanel.add(btnLogInAs);
 		
 		JLabel lblNewLabel = new JLabel("OR");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		lblNewLabel.setBounds(213, 121, 125, 48);
+		lblNewLabel.setBounds(237, 137, 125, 48);
 		homePanel.add(lblNewLabel);
 	}
 	
