@@ -310,8 +310,14 @@ insert into serves values(9, 'lemonade');
 
 
 insert into storeHasMenus values(1, 1);
+insert into storeHasMenus values(1, 2);
+insert into storeHasMenus values(1, 3);
 insert into storeHasMenus values(1, 4);
+insert into storeHasMenus values(1, 5);
+insert into storeHasMenus values(1, 6);
 insert into storeHasMenus values(1, 7);
+insert into storeHasMenus values(1, 8);
+insert into storeHasMenus values(1, 9);
 insert into storeHasMenus values(2, 2);
 insert into storeHasMenus values(2, 5);
 insert into storeHasMenus values(2, 8);
