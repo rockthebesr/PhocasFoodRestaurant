@@ -49,7 +49,7 @@ public class PhocasGUI extends JFrame {
 		this.db = db;
 		
 		onlineOrderPanel = new OnlineOrderPanel();
-		managerActionsPanel = new EmployeeActionsPanel();
+		managerActionsPanel = new EmployeeActionsPanel(db);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 528, 392);
 		homePanel = new JPanel();

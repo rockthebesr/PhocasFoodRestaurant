@@ -1,15 +1,19 @@
 package phocas;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JSpinner;
 
 public class EmployeeActionsPanel extends JTabbedPane {
+	
 	private JTextField txtItemNames;
 	private JTextField txtInstoreOrderId;
 	private JTextField txtOnlineOrderId;
@@ -28,11 +32,17 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	private JTextField txtEmployeeid;
 	private JTextField txtManagerid;
 	private JTextField txtStoreId_1;
+	private JPanel AdditionalInfoPanel;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JButton btnFindAllEmployee;
+	private JTextField txtStoreId_2;
 
 	/**
 	 * Create the panel.
 	 */
-	public EmployeeActionsPanel() {
+	public EmployeeActionsPanel(Database db) {
 		
 		JPanel panel = new JPanel();
 		addTab("Orders", null, panel, null);
@@ -202,6 +212,60 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtStoreId_1.setBounds(244, 141, 134, 28);
 		addPanel.add(txtStoreId_1);
 		txtStoreId_1.setColumns(10);
+		
+		AdditionalInfoPanel = new JPanel();
+		addTab("Additional Info", null, AdditionalInfoPanel, null);
+		AdditionalInfoPanel.setLayout(null);
+		
+		JLabel lblSelect = new JLabel("find");
+		lblSelect.setBounds(6, 6, 43, 16);
+		AdditionalInfoPanel.add(lblSelect);
+		
+		textField = new JTextField();
+		textField.setBounds(38, 0, 49, 28);
+		AdditionalInfoPanel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblFrom = new JLabel("from");
+		lblFrom.setBounds(99, 6, 36, 16);
+		AdditionalInfoPanel.add(lblFrom);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(135, 0, 93, 28);
+		AdditionalInfoPanel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblWhere = new JLabel("where");
+		lblWhere.setBounds(237, 6, 61, 16);
+		AdditionalInfoPanel.add(lblWhere);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(285, 0, 254, 28);
+		AdditionalInfoPanel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnRun = new JButton("run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String attributes = textField.getText();
+				String tables = textField_1.getText();
+				String condition = textField_1.getText();
+				JOptionPane.showMessageDialog(null, attributes + tables + condition);
+			}
+		});
+		btnRun.setBounds(192, 25, 117, 29);
+		AdditionalInfoPanel.add(btnRun);
+		
+		btnFindAllEmployee = new JButton("Find all employee ids working at this store");
+		btnFindAllEmployee.setBounds(6, 67, 292, 29);
+		AdditionalInfoPanel.add(btnFindAllEmployee);
+		
+		txtStoreId_2 = new JTextField();
+		txtStoreId_2.setText("store ID");
+		txtStoreId_2.setBounds(309, 66, 134, 28);
+		AdditionalInfoPanel.add(txtStoreId_2);
+		txtStoreId_2.setColumns(10);
 
 	}
+	
 }
