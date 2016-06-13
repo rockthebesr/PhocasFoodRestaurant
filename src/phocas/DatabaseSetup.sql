@@ -1,25 +1,24 @@
-//drop tables
-drop table manages;
-drop table delivers;
-drop table storeHasMenus;
-drop table dayTimeMenu;
-drop table breakfastMenu;
-drop table drinkMenu;
-drop table regularEmployee;
-drop table serves;
-drop table deliveryHasItems;
-drop table inStoreOrder;
-drop table onlineOrder;
-drop table item;
-drop table employee;
-drop table store;
-drop table menu;
-drop table allOrder;
-drop table delivery;
-drop table orders;
-drop table manager;
+drop table manages CASCADE CONSTRAINTS;
+drop table delivers CASCADE CONSTRAINTS;
+drop table storeHasMenus CASCADE CONSTRAINTS;
+drop table dayTimeMenu CASCADE CONSTRAINTS;
+drop table breakfastMenu CASCADE CONSTRAINTS;
+drop table drinkMenu CASCADE CONSTRAINTS;
+drop table regularEmployee CASCADE CONSTRAINTS;
+drop table serves CASCADE CONSTRAINTS;
+drop table deliveryHasItems CASCADE CONSTRAINTS;
+drop table inStoreOrder CASCADE CONSTRAINTS;
+drop table onlineOrder CASCADE CONSTRAINTS;
+drop table item CASCADE CONSTRAINTS;
+drop table employee CASCADE CONSTRAINTS;
+drop table store CASCADE CONSTRAINTS;
+drop table menu CASCADE CONSTRAINTS;
+drop table allOrder CASCADE CONSTRAINTS;
+drop table delivery CASCADE CONSTRAINTS;
+drop table orders CASCADE CONSTRAINTS;
+drop table manager CASCADE CONSTRAINTS;
 
-//table creation
+
 create table item(
           itemName varchar(30) primary key,
           stock integer,
@@ -72,18 +71,18 @@ create table regularEmployee(
 
 create table manages(
 	empID integer primary key,
-	storeID integer not null,
+	storeID integer /*not null*/,
 	foreign key (empID) references manager ON DELETE CASCADE,
 	foreign key (storeID) references store ON DELETE CASCADE);
 
 
 create table allOrder(
 	orderID integer primary key,
-	storeID integer not null,
+	storeID integer /*not null*/,
 	orderDate date,
 	price number(10,4),
 	orderStatus varchar(20) CHECK (orderStatus IN ('in preparation', 'out on delivery', 'delivered', 'finished', 'cancelled')),
-	empID integer not null,
+	empID integer /*not null*/,
 	foreign key (storeID) references store ON DELETE CASCADE,
 	foreign key (empID) references employee ON DELETE SET NULL);
 
@@ -112,7 +111,7 @@ create table deliveryHasItems(
           
 create table delivers(
 	deliveryID integer primary key,
-	orderID integer not null,
+	orderID integer /*not null*/,
 	foreign key (deliveryID) references delivery ON DELETE CASCADE,
 	foreign key (orderID) references allOrder ON DELETE CASCADE);
 
@@ -138,23 +137,22 @@ create table storeHasMenus(
 	Foreign key (menuID) references menu ON DELETE CASCADE,
 	primary key (storeID, menuID) );
 
-//drinks
 insert into item values('molson canadian', 7, 10);
 insert into item values('rootbeer float', 4, 3.5);
 insert into item values('guiness', 7, 10);
 insert into item values('iced tea', 10, 3);
 insert into item values('apple juice', 15, 3);
 insert into item values('pina colada', 8, 5);
-insert into item values('mango smoothie;', 7, 4);
+insert into item values('mango smoothie', 7, 4);
 insert into item values('lemonade', 12, 3);
 insert into item values('white peach sangria', 5, 6);
-//breakfast
+
 insert into item values('big breakfast', 20, 8);
 insert into item values('BLT bagel', 45, 5);
 insert into item values('bacon egg english muffin', 13, 5);
 insert into item values('hashbrown', 69, 1);
 insert into item values('pancake', 15, 6);
-//daytime
+
 insert into item values('buffalo chicken sandwich', 2, 8);
 insert into item values('philly cheese steak', 3, 8);
 insert into item values('chesseburger', 12, 8);
@@ -165,73 +163,35 @@ insert into item values('ceasar salad', 4, 5);
 insert into item values('coleslaw', 24, 3);
 insert into item values('fish taco', 23, 6);
 insert into item values('fries', 23, 4);
-insert into item values('onion rings' 23, 4);
+insert into item values('onion rings', 23, 4);
 insert into item values('ice cream', 32, 4); 
 insert into item values('cheesecake', 34, 5);
 insert into item values('molten lava cake', 5, 6);
 insert into item values('jalapeno popper', 14, 4);
 
-//menus
-insert into menus values(1, 6, 9);
-insert into menus values(2, 6, 9);
-insert into menus values(3, 6, 9);
-insert into menus values(4, 9, 22);
-insert into menus values(5, 9, 22);
-insert into menus values(6, 9, 22);
-insert into menus values(7, 9, 22);
-insert into menus values(8, 9, 22);
-insert into menus values(9, 9, 22);
+insert into menu values(1, 6, 9);
+insert into menu values(2, 6, 9);
+insert into menu values(3, 6, 9);
+insert into menu values(4, 9, 22);
+insert into menu values(5, 9, 22);
+insert into menu values(6, 9, 22);
+insert into menu values(7, 9, 22);
+insert into menu values(8, 9, 22);
+insert into menu values(9, 9, 22);
 
-//daytime
+
 insert into dayTimeMenu values (4);
 insert into dayTimeMenu values (5);
 insert into dayTimeMenu values (6);
-//breakfast
+
 insert into breakfastMenu values(1); 
 insert into breakfastMenu values(2);
 insert into breakfastMenu values(3); 
-//drinks
+
 insert into drinkMenu values(7);
 insert into drinkMenu values(8);
-insert into drinkMenu values(9);    
+insert into drinkMenu values(9);   
 
-//store
-insert into store values(1, 'Vancouver', 'British Columbia', '111 Granville St', 1);
-insert into store values(2, 'Richmond', 'British Columbia', '4567 Alexandra St', 2);
-insert into store values(3, 'Surrey', 'British Columbia', '240 1st Ave', 3);
-insert into store values(4, 'Toronto', 'Ontario', '3901 Dundas St', 4);
-insert into store values(5, 'Toronto', 'Ontario', '1203 Spadina St', 5);
-insert into store values(6, 'Vancouver', 'British Columbia', '6133 University Blvd', 6);
-
-//manager
-insert into manager values(1);
-insert into manager values(2);
-insert into manager values(3);
-insert into manager values(4);
-insert into manager values(5);
-insert into manager values(6);
-//regular emp
-insert into regularEmployee values(7, 1, 1);
-insert into regularEmployee values(8, 1, 1);
-insert into regularEmployee values(9, 1, 1);
-insert into regularEmployee values(10, 2, 2);
-insert into regularEmployee values(11, 2, 2);
-insert into regularEmployee values(12, 2, 2);
-insert into regularEmployee values(13, 3, 3);
-insert into regularEmployee values(14, 3, 3);
-insert into regularEmployee values(15, 3, 3);
-insert into regularEmployee values(16, 4, 4);
-insert into regularEmployee values(17, 4, 4);
-insert into regularEmployee values(18, 4, 4);
-insert into regularEmployee values(19, 5, 5);
-insert into regularEmployee values(20, 5, 5);
-insert into regularEmployee values(21, 5, 5);
-insert into regularEmployee values(22, 5, 5);
-insert into regularEmployee values(23, 6, 6);
-insert into regularEmployee values(24, 6, 6);
-insert into regularEmployee values(25, 6, 6);
-insert into regularEmployee values(26, 6, 6);
-//emp
 insert into employee values(1, 'James', 'Male');
 insert into employee values(2, 'Lily', 'Female');
 insert into employee values(3, 'Monica', 'Female');
@@ -253,13 +213,48 @@ insert into employee values(18, 'Matt', 'Male');
 insert into employee values(19, 'Jerry', 'Male');
 insert into employee values(20, 'Longinus', 'Male');
 insert into employee values(21, 'Larry', 'Male');
-insert into emoloyee values(22, 'Ginnifer', 'Female');
+insert into employee values(22, 'Ginnifer', 'Female');
 insert into employee values(23, 'Catherina', 'Female');
 insert into employee values(24, 'Kathy', 'Female');
 insert into employee values(25, 'Izzy', 'Female');
-insert into employee values(26, 'Ali', 'Female');
+insert into employee values(26, 'Ali', 'Female'); 
 
-//manages
+insert into manager values(1);
+insert into manager values(2);
+insert into manager values(3);
+insert into manager values(4);
+insert into manager values(5);
+insert into manager values(6);
+
+
+insert into store values(1, 'Vancouver', 'British Columbia', '111 Granville St', 1);
+insert into store values(2, 'Richmond', 'British Columbia', '4567 Alexandra St', 2);
+insert into store values(3, 'Surrey', 'British Columbia', '240 1st Ave', 3);
+insert into store values(4, 'Toronto', 'Ontario', '3901 Dundas St', 4);
+insert into store values(5, 'Toronto', 'Ontario', '1203 Spadina St', 5);
+insert into store values(6, 'Vancouver', 'British Columbia', '6133 University Blvd', 6);
+
+insert into regularEmployee values(7, 1, 1);
+insert into regularEmployee values(8, 1, 1);
+insert into regularEmployee values(9, 1, 1);
+insert into regularEmployee values(10, 2, 2);
+insert into regularEmployee values(11, 2, 2);
+insert into regularEmployee values(12, 2, 2);
+insert into regularEmployee values(13, 3, 3);
+insert into regularEmployee values(14, 3, 3);
+insert into regularEmployee values(15, 3, 3);
+insert into regularEmployee values(16, 4, 4);
+insert into regularEmployee values(17, 4, 4);
+insert into regularEmployee values(18, 4, 4);
+insert into regularEmployee values(19, 5, 5);
+insert into regularEmployee values(20, 5, 5);
+insert into regularEmployee values(21, 5, 5);
+insert into regularEmployee values(22, 5, 5);
+insert into regularEmployee values(23, 6, 6);
+insert into regularEmployee values(24, 6, 6);
+insert into regularEmployee values(25, 6, 6);
+insert into regularEmployee values(26, 6, 6);
+
 insert into manages values(1, 1);
 insert into manages values(2, 2);
 insert into manages values(3, 3);
@@ -267,7 +262,8 @@ insert into manages values(4, 4);
 insert into manages values(5, 5);
 insert into manages values(6, 6);
 
-//serves
+
+
 insert into serves values(1, 'big breakfast');
 insert into serves values(1, 'BLT bagel');
 insert into serves values(1, 'hashbrown');
@@ -312,7 +308,7 @@ insert into serves values(9, 'mango smoothie');
 insert into serves values(9, 'pina colada');
 insert into serves values(9, 'lemonade');
 
-//storehasmenu
+
 insert into storeHasMenus values(1, 1);
 insert into storeHasMenus values(1, 4);
 insert into storeHasMenus values(1, 7);
@@ -332,7 +328,7 @@ insert into storeHasMenus values(6, 3);
 insert into storeHasMenus values(6, 4);
 insert into storeHasMenus values(6, 8);
 
-//allorder
+
 insert into allOrder values(1, 1, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 8,'delivered', 1);
 insert into allOrder values(2, 1, TO_DATE('22/April/2016 9:30:00AM','DD/MON/YY HH:MI:SSAM'), 12,'in preparation', 7);
 insert into allOrder values(3, 1, TO_DATE('22/April/2016 12:30:00PM','DD/MON/YY HH:MI:SSAM'), 5,'finished', 8);
@@ -358,7 +354,6 @@ insert into allOrder values(22, 6, TO_DATE('22/April/2016 8:32:00PM','DD/MON/YY 
 insert into allOrder values(23, 6, TO_DATE('22/April/2016 8:33:00PM','DD/MON/YY HH:MI:SSAM'), 3,'finished',25);
 insert into allOrder values(24, 6, TO_DATE('22/April/2016 8:34:00PM','DD/MON/YY HH:MI:SSAM'), 5,'finished',26);
 
-//instore order
 insert into inStoreOrder values(2);
 insert into inStoreOrder values(3);
 insert into inStoreOrder values(4);
@@ -378,7 +373,6 @@ insert into inStoreOrder values(22);
 insert into inStoreOrder values(23);
 insert into inStoreOrder values(24);
 
-//online order
 insert into onlineOrder values(1, '8295 Scott Road', 'Simon',  6045079393);
 insert into onlineOrder values(5, '579 Yonge Street', 'Claire',  6473442637);
 insert into onlineOrder values(9, '13 Baldwin Street', 'Marcus',  4167928858);
@@ -386,7 +380,6 @@ insert into onlineOrder values(13, '120 Lombard Avenue', 'Sameer',  6478961774);
 insert into onlineOrder values(17, '92 Front Street E', 'Ruth',  4163927219);
 insert into onlineOrder values(21, '92 Front Street E', 'Ruby',  7783927219);
 
-//delivery
 insert into delivery values(1, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
 insert into delivery values(2, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'out on delivery');
 insert into delivery values(3, TO_DATE('22/April/2016 6:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
@@ -394,15 +387,13 @@ insert into delivery values(4, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:M
 insert into delivery values(5, TO_DATE('22/April/2016 8:30:00AM','DD/MON/YY HH:MI:SSAM'), 'delivered');
 insert into delivery values(6, TO_DATE('22/April/2016 8:31:00PM','DD/MON/YY HH:MI:SSAM'), 'out on delivery');
 
-//delivers
 insert into delivers values(1, 1);
-insert into delivers values(1, 5);
-insert into delivers values(1, 9);
-insert into delivers values(1, 13);
-insert into delivers values(1, 17);
-insert into delivers values(1, 21);
+insert into delivers values(2, 5);
+insert into delivers values(3, 9);
+insert into delivers values(4, 13);
+insert into delivers values(5, 17);
+insert into delivers values(6, 21);
 
-//deliveryHasItems
 insert into deliveryHasItems values(1, 'big breakfast');
 insert into deliveryHasItems values(2, 'bacon egg english muffin');
 insert into deliveryHasItems values(3, 'pancake');
@@ -410,7 +401,6 @@ insert into deliveryHasItems values(4, 'hashbrown');
 insert into deliveryHasItems values(5, 'pancake');
 insert into deliveryHasItems values(6, 'buffalo chicken sandwich');
 
-//orders
 insert into orders values(1, 'big breakfast');
 insert into orders values(2, 'buffalo chicken sandwich');
 insert into orders values(2, 'jalapeno popper');
