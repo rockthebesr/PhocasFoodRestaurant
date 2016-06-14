@@ -155,7 +155,7 @@ insert into item values('pancake', 15, 6);
 
 insert into item values('buffalo chicken sandwich', 2, 8);
 insert into item values('philly cheese steak', 3, 8);
-insert into item values('chesseburger', 12, 8);
+insert into item values('cheeseburger', 12, 8);
 insert into item values('chicken strip', 4, 8);
 insert into item values('chispy chicken sandwich', 13, 8);
 insert into item values('hot wings', 3, 8);
