@@ -306,7 +306,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 				String attributes = textField.getText();
 				String tables = textField_1.getText();
 				String condition = textField_1.getText();
-				JOptionPane.showMessageDialog(null, attributes + tables + condition);
+				String q = "select " + attributes + " from tables " + " where " + condition;
+				ResultSet rs = db.query(q);
+				String s = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, s);
 			}
 		});
 		btnRun.setBounds(192, 25, 117, 29);
@@ -315,7 +318,7 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		btnFindAllEmployee = new JButton("Find all employee ids working at this store");
 		btnFindAllEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ResultSet rs = db.findEmpIDForStore(storeID);
+				ResultSet rs = db.findEmpIDForStore(Integer.parseInt(txtStoreId_2.getText()));
 				String q = db.resultSetToString(rs);
 				JOptionPane.showMessageDialog(null, q);
 			}
