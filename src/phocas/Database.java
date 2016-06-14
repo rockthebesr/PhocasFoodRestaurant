@@ -75,9 +75,7 @@ public class Database {
             if (rs.next()) {
                 orderID = rs.getInt(1) + 1;
             }
-            this.update("insert into orders values(" + orderID + ", " + itemName + ")");
-            rs = this.query("Select i.price from item i, orders o " +
-                    "where i.itemName = o.itemName and o.itemName = '" + itemName + "'");
+            rs = this.query("Select price from item where itemName = '" + itemName + "'");
             double price = 0;
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
@@ -124,9 +122,7 @@ public class Database {
             if (rs.next()) {
                 orderID = rs.getInt(1) + 1;
             }
-            this.update("insert into orders values(" + orderID + ", " + itemName + ")");
-            rs = this.query("Select i.price from item i, orders o " +
-                    "where i.itemName = o.itemName and o.itemName = '" + itemName + "'");
+            rs = this.query("Select price from item where itemName = '" + itemName + "'");
             double price = 0;
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
