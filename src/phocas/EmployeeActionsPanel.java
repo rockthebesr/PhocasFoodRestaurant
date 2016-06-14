@@ -54,7 +54,7 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	/**
 	 * Create the panel.
 	 */
-	public EmployeeActionsPanel(Database db) {
+	public EmployeeActionsPanel(Database db, Boolean isManager, int storeID, int empID) {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 248, 255));
@@ -141,8 +141,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JPanel addPanel = new JPanel();
 		addPanel.setBackground(new Color(240, 248, 255));
-		addTab("Add/Delete", null, addPanel, null);
-		addPanel.setLayout(null);
+		if (isManager) {
+			addTab("Add/Delete", null, addPanel, null);
+			addPanel.setLayout(null);
+		}
 		
 		txtMenuId = new JTextField();
 		txtMenuId.setBounds(6, 6, 92, 28);
@@ -262,8 +264,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		AdditionalInfoPanel = new JPanel();
 		AdditionalInfoPanel.setBackground(new Color(240, 248, 255));
-		addTab("Additional Info", null, AdditionalInfoPanel, null);
-		AdditionalInfoPanel.setLayout(null);
+		if (isManager) {
+			addTab("Additional Info", null, AdditionalInfoPanel, null);
+			AdditionalInfoPanel.setLayout(null);
+		}
 		
 		JLabel lblSelect = new JLabel("find");
 		lblSelect.setBounds(6, 6, 43, 16);

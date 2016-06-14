@@ -31,7 +31,6 @@ public class PhocasGUI extends JFrame {
 
 	private JPanel homePanel;
 	private JPanel onlineOrderPanel;
-	private JTabbedPane managerActionsPanel;
 	private JTextField txtEmployeeName;
 	private JTextField txtEmployeeID;
 	
@@ -50,9 +49,8 @@ public class PhocasGUI extends JFrame {
 		this.db = db;
 		
 		onlineOrderPanel = new OnlineOrderPanel(db);
-		managerActionsPanel = new EmployeeActionsPanel(db);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 528, 392);
+		setBounds(100, 100, 561, 392);
 		homePanel = new JPanel();
 		homePanel.setBackground(new Color(204, 255, 255));
 		homePanel.setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -102,13 +100,17 @@ public class PhocasGUI extends JFrame {
 		btnLogInAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = txtEmployeeName.getText();
-				String id = txtEmployeeID.getText();
-				if (!name.isEmpty() && !id.isEmpty()) {
-					Boolean empExist = db.existEmployee(name, id);
+				String empId = txtEmployeeID.getText();
+				if (!name.isEmpty() && !empId.isEmpty()) {
+					Boolean empExist = db.existEmployee(name, empId);
 					if (empExist) {
+						Boolean empIsManager = db.isManager(empId);
+						int storeId = db.getStoreIdForEmp(empId);
+					    JTabbedPane employeeActionsPanel = new EmployeeActionsPanel(db, empIsManager, storeId, Integer.parseInt(empId));
+					    
 						homePanel.removeAll();
 						homePanel.setLayout(new java.awt.BorderLayout());
-						homePanel.add(managerActionsPanel);
+						homePanel.add(employeeActionsPanel);
 						homePanel.revalidate();
 						homePanel.repaint();
 					} else {

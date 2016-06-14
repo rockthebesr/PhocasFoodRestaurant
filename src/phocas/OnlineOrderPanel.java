@@ -10,6 +10,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 import javax.swing.JTextArea;
 
@@ -24,7 +25,8 @@ public class OnlineOrderPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public OnlineOrderPanel(Database db) {
+	public OnlineOrderPanel(Database d) {
+		final Database db = d;
 		setBackground(new Color(240, 248, 255));
 		setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		setLayout(null);
@@ -101,7 +103,13 @@ public class OnlineOrderPanel extends JPanel {
 						) {
 					JOptionPane.showMessageDialog(null, "At least one of the information is empty!");
 				} else {
-					
+					try {
+						db.makeOnlineOrder(items, Integer.parseInt(storeID), Integer.parseInt(empID), address, name, Integer.parseInt(phone));
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null, "store ID, employee ID and phone should be only numbers!");
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null, "failed to add order");
+					}
 				}
 			}
 		});

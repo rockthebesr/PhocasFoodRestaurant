@@ -17,7 +17,7 @@ public class Database {
         PrivateInfo p = new PrivateInfo();
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            System.out.println("start");
+            JOptionPane.showMessageDialog(null, "start");
             con = DriverManager.getConnection(
                     "jdbc:oracle:thin:@localhost:1522:ug",
                     p.account,
@@ -54,7 +54,7 @@ public class Database {
             stmt.executeUpdate(s);
             stmt.clearBatch();
         } catch (SQLException e) {
-            System.out.println("Update failed");
+            JOptionPane.showMessageDialog(null, "Update failed");
         }
     }
     
@@ -68,7 +68,7 @@ public class Database {
                 stock = rs.getInt(1);
             }
             if (stock == 0) {
-                System.out.println("There are 0 " + itemName + " in stock. Order declined.");
+                JOptionPane.showMessageDialog(null, "There are 0 " + itemName + " in stock. Order declined.");
                 return;
             }
             rs = this.query("Select count(*) from allOrder");
@@ -88,9 +88,9 @@ public class Database {
                     " in preparation " + empID + ")");
             this.update("insert into inStoreOrder values(" + orderID + " )");
             this.update("insert into orders values(" + orderID + ", '" + itemName + "')");
-            System.out.println("The order has been added. The orderID is: " + orderID);
+            JOptionPane.showMessageDialog(null, "The order has been added. The orderID is: " + orderID);
         } catch (SQLException e) {
-            System.out.println("Order declined");
+            JOptionPane.showMessageDialog(null, "Order declined");
         }
 
     }
@@ -98,13 +98,13 @@ public class Database {
     public void fulfillInStoreOrder(int orderID) throws SQLException {
         
         this.update("Update allOrders set orderStatus = 'finished' where orderID = " + orderID);
-        System.out.println("Order Finished");
+        JOptionPane.showMessageDialog(null, "Order Finished");
     }
 
     public void cancelInStoreOrder(int orderID) throws SQLException {
             
             this.update("Update allOrders set orderStatus = 'cancelled' where orderID = " + orderID);
-            System.out.println("Order Cancelled");
+            JOptionPane.showMessageDialog(null, "Order Cancelled");
 
     }
 
@@ -118,7 +118,7 @@ public class Database {
                 stock = rs.getInt(1);
             }
             if (stock == 0) {
-                System.out.println("There are 0 " + itemName + " in stock. Order declined.");
+                JOptionPane.showMessageDialog(null, "There are 0 " + itemName + " in stock. Order declined.");
                 return;
             }
             rs = this.query("Select count(*) from allOrder");
@@ -139,9 +139,9 @@ public class Database {
             this.update("insert into orders values(" + orderID + ", '" + itemName + "')");
             this.update("insert into onlineOrder values(" + orderID + ", " +
                     "'" + address + "', '" + cName + "' ," + phone + ")");
-            System.out.println("The order has been added. The orderID is: " + orderID);
+            JOptionPane.showMessageDialog(null, "The order has been added. The orderID is: " + orderID);
         } catch (SQLException e) {
-            System.out.println("Order declined");
+            JOptionPane.showMessageDialog(null, "Order declined");
         }
 
     }
@@ -164,9 +164,9 @@ public class Database {
                 rs.getString(1);
             }
             this.update(("Insert into deliveryHasItem(" + deliveryID + ", '" + itemName + "')"));
-            System.out.println("The delivery has been added. The deliveryID is: " + deliveryID);
+            JOptionPane.showMessageDialog(null, "The delivery has been added. The deliveryID is: " + deliveryID);
         } catch (SQLException e) {
-            System.out.println("Declined");
+            JOptionPane.showMessageDialog(null, "Declined");
         }
     }
 
@@ -180,10 +180,10 @@ public class Database {
                 orderID = rs.getInt(1);
             }
             this.update("Update allOrder set orderStatus = 'delivered' where orderID = " + orderID);
-            System.out.println("Delivery has been delivered");
+            JOptionPane.showMessageDialog(null, "Delivery has been delivered");
 
         } catch (SQLException e) {
-            System.out.println("Declined");
+            JOptionPane.showMessageDialog(null, "Declined");
         }
     }
 
@@ -196,7 +196,7 @@ public class Database {
                 check = rs.getString(1);
             }
             if (check == "Delivered" || check == "Finished" || check == "Cancelled") {
-                System.out.println("Declined");
+                JOptionPane.showMessageDialog(null, "Declined");
                 return;
             }
             String checkInStore = null;
@@ -205,11 +205,11 @@ public class Database {
                 checkInStore = rs.getString(1);
             }
             if (checkInStore != null && new_status == "Delivered") {
-                System.out.println("Declined");
+                JOptionPane.showMessageDialog(null, "Declined");
                 return;
             }
         } catch (SQLException e) {
-            System.out.println("Declined");
+            JOptionPane.showMessageDialog(null, "Declined");
         }
     }
 
@@ -230,22 +230,22 @@ public class Database {
             if (rs.next()) {
                 orderStatus = rs.getString(1);
             }
-            System.out.println("The order status is : " + orderStatus);
+            JOptionPane.showMessageDialog(null, "The order status is : " + orderStatus);
         } catch (SQLException e) {
-            System.out.println("Order not found");
+            JOptionPane.showMessageDialog(null, "Order not found");
         }
     }
 
     public void addItem(String itemName, double cost) {
         
         this.update("Insert into item values('" + itemName + "', 0," + cost + ")");
-        System.out.println(itemName + " has been added");
+        JOptionPane.showMessageDialog(null, itemName + " has been added");
     }
 
     public void changeStock(String itemName, int stock) {
         
         this.update("Update item set stock = " + stock + " where itemName = '" + itemName + "'");
-        System.out.println("The stock of " + itemName + " has been updated");
+        JOptionPane.showMessageDialog(null, "The stock of " + itemName + " has been updated");
     }
 
     public void addStore(int storeID, String city, String province, String location, int managerID, int menuID) {
@@ -254,7 +254,7 @@ public class Database {
                 ", '" + city + "', '" + province + "', '" + location + "')");
         this.update("Insert into manages values(" + managerID + ", " + storeID + ")");
         this.update("Insert into manages values(" + storeID + ", " + menuID + ")");
-        System.out.println("Store has been added");
+        JOptionPane.showMessageDialog(null, "Store has been added");
     }
 
     public void addRegularEmployee(String name, String gender, int storeID, int managerID, int empID) {
@@ -267,7 +267,7 @@ public class Database {
              this.update("Insert into employee values(" + empID + " ,'" + name + "' ,'" + gender + "')");
              this.update("Insert into regularEmployee values(" + empID + " ," + storeID + " ," + managerID + ")");
         } catch (SQLException e) {
-            System.out.println("Store or manager doesn't exist.");
+            JOptionPane.showMessageDialog(null, "Store or manager doesn't exist.");
         }
     }
     
@@ -285,6 +285,43 @@ public class Database {
     		return b;
     	}
     	return b;
+    }
+    
+    public Boolean isManager(String empID) {
+    	String q = "SELECT * FROM manager WHERE empID = " + empID;
+    	ResultSet rs = this.query(q);
+    	Boolean b = false;
+    		try {
+				if(rs.next()) {
+					b = true;
+				}
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "emp ID not found in managers");
+				b = false;
+			}
+    	return b;
+    }
+    
+    public Boolean isManager(int empID) {
+    	return isManager(Integer.toString(empID));
+    }
+    
+    public int getStoreIdForEmp(String empID) {
+    	String q;
+    	if (isManager(empID)) {
+        	q = "SELECT storeID FROM manages WHERE empID = " + empID;
+    	} else {
+    		q = "SELECT storeID FROM regularEmployee WHERE empID = " + empID;
+    	}
+    	ResultSet rs = this.query(q);
+    	try {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "can not find storeID for this employee");
+		}
+    	return 0;
     }
     
     public Boolean existEmployee(String name, int empID) {
@@ -397,13 +434,13 @@ public class Database {
         public void addMenu(int menuID, int serveStartTime, int serveEndTime) {
         String query = "Insert into menu values(" + menuID + ", " + serveStartTime + ", " + serveEndTime;
         this.update(query);
-        System.out.println("Menu " + menuID + " has been added");
+        JOptionPane.showMessageDialog(null, "Menu " + menuID + " has been added");
     }
 
     public void deleteMenu(int menuID) {
         String query = "delete from menu where menuID = " + menuID;
         this.update(query);
-        System.out.println("Menu " + menuID + " has been deleted");
+        JOptionPane.showMessageDialog(null, "Menu " + menuID + " has been deleted");
     }
 }
 
