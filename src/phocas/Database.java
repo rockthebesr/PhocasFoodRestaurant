@@ -388,9 +388,9 @@ public class Database {
 	public ResultSet MaxMinPrice(String condition){
 		ResultSet rs = null;
 		if(condition.equalsIgnoreCase("max")){
-			rs=query("Select itemName, MAX(price) From item");
+			rs=query("Select i1.itemName, i1.price From item i1 where price = (select max(i2.price) from item i2)");
 		}else if(condition.equalsIgnoreCase("min")){
-			rs=query("Select itemName, MIN(price) From item");
+			rs=query("Select i1.itemName, i1.price From item i1 where price = (select min(i2.price) from item i2)");
 		}
 		return rs;
 	}
