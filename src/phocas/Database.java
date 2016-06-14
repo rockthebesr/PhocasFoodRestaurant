@@ -429,7 +429,7 @@ public class Database {
 
     
         public void addMenu(int menuID, int serveStartTime, int serveEndTime) {
-        String query = "Insert into menu values(" + menuID + ", " + serveStartTime + ", " + serveEndTime;
+        String query = "Insert into menu values(" + menuID + ", " + serveStartTime + ", " + serveEndTime + ")";
         this.update(query);
         JOptionPane.showMessageDialog(null, "Menu " + menuID + " has been added");
     }
