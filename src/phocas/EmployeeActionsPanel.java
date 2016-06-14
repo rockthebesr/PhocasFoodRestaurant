@@ -326,7 +326,7 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		btnFindTheStores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ResultSet rs = db.findStoreAllMenu();
-				String s = db.ResultSetToString(rs);
+				String s = db.resultSetToString(rs);
 				JOptionPane.showMessageDialog(null, s);
 			}
 		});

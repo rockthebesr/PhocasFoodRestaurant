@@ -413,7 +413,7 @@ public class Database {
     }
 
     //toString method of ResultSet
-    public String ResultSetToString(ResultSet rs){
+    public String resultSetToString(ResultSet rs){
     	String result = "";
     	try{
     		ResultSetMetaData rsmd = rs.getMetaData();
