@@ -80,9 +80,11 @@ public class Database {
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
             }
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + dateFormat + ", " + price +
-                    " in preparation " + empID + ")");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss a");
+            java.util.Date date = new java.util.Date();
+            String str = "TO_DATE('" + dateFormat.format(date) + "', 'DD/MON/YY HH:MI:SSAM')";
+            this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + str + ", " + price +
+                    ", 'in preparation', " + empID + ")");
             this.update("insert into inStoreOrder values(" + orderID + " )");
             this.update("insert into orders values(" + orderID + ", '" + itemName + "')");
             JOptionPane.showMessageDialog(null, "The order has been added. The orderID is: " + orderID);
@@ -127,9 +129,11 @@ public class Database {
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
             }
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + dateFormat + ", " + price +
-                    " in preparation " + empID + ")");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss a");
+            java.util.Date date = new java.util.Date();
+            String str = "TO_DATE('" + dateFormat.format(date) + "', 'DD/MON/YY HH:MI:SSAM')";
+            this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + str + ", " + price +
+                    ", 'in preparation', " + empID + ")");
             this.update("insert into orders values(" + orderID + ", '" + itemName + "')");
             this.update("insert into onlineOrder values(" + orderID + ", " +
                     "'" + address + "', '" + cName + "' ," + phone + ")");
