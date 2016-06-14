@@ -357,7 +357,7 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		btnAddMenu = new JButton("add menu");
 		btnAddMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int menuID = Integer.parseInt(txtMenuId.getText());
+				int menuID = Integer.parseInt(txtMenuId_1.getText());
 				int serveStartTime = Integer.parseInt(txtServeStartTime.getText());
 				int serveEndTime = Integer.parseInt(txtServeEndTime.getText());
 				db.addMenu(menuID, serveStartTime, serveEndTime);
@@ -434,8 +434,8 @@ public class EmployeeActionsPanel extends JTabbedPane {
 			public void actionPerformed(ActionEvent e) {
 				String attributes = textField.getText();
 				String tables = textField_1.getText();
-				String condition = textField_1.getText();
-				String q = "select " + attributes + " from tables " + " where " + condition;
+				String condition = textField_2.getText();
+				String q = "select " + attributes + " from " + tables + " where " + condition;
 				ResultSet rs = db.query(q);
 				String s = db.resultSetToString(rs);
 				JOptionPane.showMessageDialog(null, s);
