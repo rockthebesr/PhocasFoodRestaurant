@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JSpinner;
+
 import java.awt.Color;
+import java.sql.ResultSet;
 
 public class EmployeeActionsPanel extends JTabbedPane {
 	
@@ -56,21 +58,21 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	 */
 	public EmployeeActionsPanel(Database db, Boolean isManager, int storeID, int empID) {
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(240, 248, 255));
-		addTab("Orders", null, panel, null);
-		panel.setLayout(null);
+		JPanel orderPanel = new JPanel();
+		orderPanel.setBackground(new Color(240, 248, 255));
+		addTab("Orders", null, orderPanel, null);
+		orderPanel.setLayout(null);
 		
 		txtItemNames = new JTextField();
 		txtItemNames.setText("item names");
 		txtItemNames.setToolTipText("itemNames");
 		txtItemNames.setBounds(227, 5, 239, 28);
-		panel.add(txtItemNames);
+		orderPanel.add(txtItemNames);
 		txtItemNames.setColumns(10);
 		
 		JButton btnAddNewInstore = new JButton("Add new in-store order");
 		btnAddNewInstore.setBounds(6, 6, 196, 29);
-		panel.add(btnAddNewInstore);
+		orderPanel.add(btnAddNewInstore);
 		
 		JButton btnFulfillOrder = new JButton("Fulfill in-store order");
 		btnFulfillOrder.addActionListener(new ActionListener() {
@@ -78,50 +80,50 @@ public class EmployeeActionsPanel extends JTabbedPane {
 			}
 		});
 		btnFulfillOrder.setBounds(251, 45, 196, 29);
-		panel.add(btnFulfillOrder);
+		orderPanel.add(btnFulfillOrder);
 		
 		txtInstoreOrderId = new JTextField();
 		txtInstoreOrderId.setText("in-store order id");
 		txtInstoreOrderId.setBounds(6, 45, 239, 28);
-		panel.add(txtInstoreOrderId);
+		orderPanel.add(txtInstoreOrderId);
 		txtInstoreOrderId.setColumns(10);
 		
 		JButton btnCancelInstoreOrder = new JButton("Cancel in-store order");
 		btnCancelInstoreOrder.setBounds(251, 70, 196, 29);
-		panel.add(btnCancelInstoreOrder);
+		orderPanel.add(btnCancelInstoreOrder);
 		
 		JButton btnFulfillOnlineOrder = new JButton("Fulfill online order");
 		btnFulfillOnlineOrder.setBounds(251, 111, 196, 29);
-		panel.add(btnFulfillOnlineOrder);
+		orderPanel.add(btnFulfillOnlineOrder);
 		
 		txtOnlineOrderId = new JTextField();
 		txtOnlineOrderId.setText("online order id");
 		txtOnlineOrderId.setBounds(6, 110, 239, 28);
-		panel.add(txtOnlineOrderId);
+		orderPanel.add(txtOnlineOrderId);
 		txtOnlineOrderId.setColumns(10);
 		
 		JButton btnCancelOnlineOrder = new JButton("Cancel online order");
 		btnCancelOnlineOrder.setBounds(251, 136, 196, 29);
-		panel.add(btnCancelOnlineOrder);
+		orderPanel.add(btnCancelOnlineOrder);
 		
 		txtOrderId = new JTextField();
 		txtOrderId.setText("order id");
 		txtOrderId.setBounds(6, 176, 237, 28);
-		panel.add(txtOrderId);
+		orderPanel.add(txtOrderId);
 		txtOrderId.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Check order status");
 		btnNewButton.setBounds(251, 177, 196, 29);
-		panel.add(btnNewButton);
+		orderPanel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Update order status");
 		btnNewButton_1.setBounds(250, 203, 197, 29);
-		panel.add(btnNewButton_1);
+		orderPanel.add(btnNewButton_1);
 		
 		txtNewOrderStatus = new JTextField();
 		txtNewOrderStatus.setText("New order status");
 		txtNewOrderStatus.setBounds(6, 202, 239, 28);
-		panel.add(txtNewOrderStatus);
+		orderPanel.add(txtNewOrderStatus);
 		txtNewOrderStatus.setColumns(10);
 		
 		JPanel deliveryPanel = new JPanel();
@@ -141,10 +143,11 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JPanel addPanel = new JPanel();
 		addPanel.setBackground(new Color(240, 248, 255));
-		if (isManager) {
+		//TODO
+		//if (isManager) {
 			addTab("Add/Delete", null, addPanel, null);
 			addPanel.setLayout(null);
-		}
+		//}
 		
 		txtMenuId = new JTextField();
 		txtMenuId.setBounds(6, 6, 92, 28);
@@ -264,10 +267,11 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		AdditionalInfoPanel = new JPanel();
 		AdditionalInfoPanel.setBackground(new Color(240, 248, 255));
-		if (isManager) {
+		//TODO
+		//if (isManager) {
 			addTab("Additional Info", null, AdditionalInfoPanel, null);
 			AdditionalInfoPanel.setLayout(null);
-		}
+		//}
 		
 		JLabel lblSelect = new JLabel("find");
 		lblSelect.setBounds(6, 6, 43, 16);
@@ -319,6 +323,13 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtStoreId_2.setColumns(10);
 		
 		btnFindTheStores = new JButton("Find the stores that has all the menus");
+		btnFindTheStores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.findStoreAllMenu();
+				String s = db.ResultSetToString(rs);
+				JOptionPane.showMessageDialog(null, s);
+			}
+		});
 		btnFindTheStores.setBounds(6, 98, 292, 29);
 		AdditionalInfoPanel.add(btnFindTheStores);
 		

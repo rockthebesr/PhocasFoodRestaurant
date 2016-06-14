@@ -414,14 +414,14 @@ public class Database {
 
     //toString method of ResultSet
     public String ResultSetToString(ResultSet rs){
-    	String result = null;
+    	String result = "";
     	try{
     		ResultSetMetaData rsmd = rs.getMetaData();
     		int columnsNumber = rsmd.getColumnCount();
     		while (rs.next()) {
     			for (int i = 1; i <= columnsNumber; i++) {
     				String columnValue = rs.getString(i);
-    				result+=columnValue + " " + rsmd.getColumnName(i)+"\n" ;
+    				result += rsmd.getColumnName(i)  + ": " + columnValue+"\n" ;
     			}
     		}
     	}catch(SQLException e){
