@@ -206,6 +206,8 @@ public class Database {
                 JOptionPane.showMessageDialog(null, "Declined");
                 return;
             }
+            this.update("update allOrder set orderStatus = '" + new_status + "' where orderID = " + orderID);
+            JOptionPane.showMessageDialog(null, "Order " + orderID + " has been updated to " + new_status);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Declined");
         }
