@@ -439,6 +439,8 @@ public class Database {
     public void deleteMenu(int menuID) {
         String query = "delete from menu where menuID = " + menuID;
         this.update(query);
+        String query2 = "delete from storeHasmenus where menuID = " + menuID;
+        this.update(query2);
         JOptionPane.showMessageDialog(null, "Menu " + menuID + " has been deleted");
     }
 }
