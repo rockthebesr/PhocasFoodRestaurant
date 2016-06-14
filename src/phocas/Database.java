@@ -420,8 +420,9 @@ public class Database {
     		while (rs.next()) {
     			for (int i = 1; i <= columnsNumber; i++) {
     				String columnValue = rs.getString(i);
-    				result += rsmd.getColumnName(i)  + ": " + columnValue+"\n" ;
+    				result += rsmd.getColumnName(i)  + ": " + columnValue+" " ;
     			}
+    			result+="\n";
     		}
     	}catch(SQLException e){
     		result ="Query Failed";

@@ -16,6 +16,7 @@ public class Phocas {
 		Database db = new Database();
 		PhocasGUI gui = new PhocasGUI(db);
 		gui.run();
+		
 	}
 
 }
