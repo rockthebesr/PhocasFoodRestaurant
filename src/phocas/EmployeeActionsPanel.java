@@ -313,6 +313,13 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		AdditionalInfoPanel.add(btnRun);
 		
 		btnFindAllEmployee = new JButton("Find all employee ids working at this store");
+		btnFindAllEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.findEmpIDForStore(storeID);
+				String q = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, q);
+			}
+		});
 		btnFindAllEmployee.setBounds(6, 67, 292, 29);
 		AdditionalInfoPanel.add(btnFindAllEmployee);
 		
@@ -334,18 +341,46 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		AdditionalInfoPanel.add(btnFindTheStores);
 		
 		btnSalesOfEach = new JButton("Sales of each store");
+		btnSalesOfEach.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.SaleOfEachStore();
+				String q = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, q);
+			}
+		});
 		btnSalesOfEach.setBounds(333, 98, 206, 29);
 		AdditionalInfoPanel.add(btnSalesOfEach);
 		
 		btnSalesOfEach_1 = new JButton("Sales of each province");
+		btnSalesOfEach_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.SaleOfEachProvince();
+				String q = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, q);
+			}
+		});
 		btnSalesOfEach_1.setBounds(333, 128, 206, 29);
 		AdditionalInfoPanel.add(btnSalesOfEach_1);
 		
 		btnMostExpensiveItem = new JButton("Most expensive item");
+		btnMostExpensiveItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.MaxMinPrice("max");
+				String q = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, q);
+			}
+		});
 		btnMostExpensiveItem.setBounds(6, 128, 158, 29);
 		AdditionalInfoPanel.add(btnMostExpensiveItem);
 		
 		btnLeastExpensiveItem = new JButton("Least expensive item");
+		btnLeastExpensiveItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet rs = db.MaxMinPrice("min");
+				String q = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, q);
+			}
+		});
 		btnLeastExpensiveItem.setBounds(161, 128, 167, 29);
 		AdditionalInfoPanel.add(btnLeastExpensiveItem);
 

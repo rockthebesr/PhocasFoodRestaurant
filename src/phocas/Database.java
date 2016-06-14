@@ -395,7 +395,7 @@ public class Database {
 		return rs;
 	}
 	    //find all employees who work at storeID
-    public ResultSet joinEmpStore (int storeID) {
+    public ResultSet findEmpIDForStore (int storeID) {
         String query = "Select e.empID from regularemployee e, store s " +
                 "where e.storeID = s.storeID and e.storeID = " + storeID;
         ResultSet rs = this.query(query);
