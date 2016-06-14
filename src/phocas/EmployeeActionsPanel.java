@@ -14,16 +14,18 @@ import javax.swing.JSpinner;
 
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class EmployeeActionsPanel extends JTabbedPane {
 	
-	private JTextField txtItemNames;
+	private JTextField txtItemName_1;
 	private JTextField txtInstoreOrderId;
 	private JTextField txtOnlineOrderId;
 	private JTextField txtOrderId;
 	private JTextField txtNewOrderStatus;
 	private JTextField txtDeliveryId;
-	private JTextField txtMenuId;
 	private JTextField txtItemName;
 	private JTextField txtPrice;
 	private JTextField txtStoreId;
@@ -33,7 +35,7 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	private JTextField txtEmployeeName;
 	private JTextField txtGender;
 	private JTextField txtEmployeeid;
-	private JTextField txtManagerid;
+	private JTextField txtManagerId_1;
 	private JTextField txtStoreId_1;
 	private JPanel AdditionalInfoPanel;
 	private JTextField textField;
@@ -52,6 +54,8 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	private JButton btnSalesOfEach_1;
 	private JButton btnMostExpensiveItem;
 	private JButton btnLeastExpensiveItem;
+	private JTextField txtMenuId;
+	private JTextField txtManagerId;
 
 	/**
 	 * Create the panel.
@@ -63,20 +67,39 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		addTab("Orders", null, orderPanel, null);
 		orderPanel.setLayout(null);
 		
-		txtItemNames = new JTextField();
-		txtItemNames.setText("item names");
-		txtItemNames.setToolTipText("itemNames");
-		txtItemNames.setBounds(227, 5, 239, 28);
-		orderPanel.add(txtItemNames);
-		txtItemNames.setColumns(10);
+		txtItemName_1 = new JTextField();
+		txtItemName_1.setText("item name");
+		txtItemName_1.setToolTipText("item name");
+		txtItemName_1.setBounds(227, 5, 239, 28);
+		orderPanel.add(txtItemName_1);
+		txtItemName_1.setColumns(10);
 		
 		JButton btnAddNewInstore = new JButton("Add new in-store order");
+		btnAddNewInstore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = txtItemName_1.getText();
+				try {
+					db.makeInStoreOrder(item, storeID, empID);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Failed to add order");
+				}
+				
+			}
+		});
 		btnAddNewInstore.setBounds(6, 6, 196, 29);
 		orderPanel.add(btnAddNewInstore);
 		
 		JButton btnFulfillOrder = new JButton("Fulfill in-store order");
 		btnFulfillOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String orderId = txtInstoreOrderId.getText();
+				try {
+					db.fulfillInStoreOrder(Integer.parseInt(orderId));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "order id can only be numbers");
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "order was not fulfilled successfully");
+				}
 			}
 		});
 		btnFulfillOrder.setBounds(251, 45, 196, 29);
@@ -89,10 +112,32 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtInstoreOrderId.setColumns(10);
 		
 		JButton btnCancelInstoreOrder = new JButton("Cancel in-store order");
+		btnCancelInstoreOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderId = txtInstoreOrderId.getText();
+				try {
+					db.cancelInStoreOrder(Integer.parseInt(orderId));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "order id can only be numbers");
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "order was not cancelled successfully");
+				}
+			}
+		});
 		btnCancelInstoreOrder.setBounds(251, 70, 196, 29);
 		orderPanel.add(btnCancelInstoreOrder);
 		
 		JButton btnFulfillOnlineOrder = new JButton("Fulfill online order");
+		btnFulfillOnlineOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderId = txtOnlineOrderId.getText();
+				try {
+					db.fulfillOnlineOrder(Integer.parseInt(orderId));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "order id can only be numbers");
+				}
+			}
+		});
 		btnFulfillOnlineOrder.setBounds(251, 111, 196, 29);
 		orderPanel.add(btnFulfillOnlineOrder);
 		
@@ -103,6 +148,18 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtOnlineOrderId.setColumns(10);
 		
 		JButton btnCancelOnlineOrder = new JButton("Cancel online order");
+		btnCancelOnlineOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderId = txtOnlineOrderId.getText();
+				try {
+					db.cancelInStoreOrder(Integer.parseInt(orderId));
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "order id can only be numbers");
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "declined");
+				}
+			}
+		});
 		btnCancelOnlineOrder.setBounds(251, 136, 196, 29);
 		orderPanel.add(btnCancelOnlineOrder);
 		
@@ -113,10 +170,29 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtOrderId.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Check order status");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderId = txtOrderId.getText();
+				db.checkOrderStatus(Integer.parseInt(orderId));
+			}
+		});
 		btnNewButton.setBounds(251, 177, 196, 29);
 		orderPanel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Update order status");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderId = txtOrderId.getText();
+				String newStatus = txtNewOrderStatus.getText();
+				try {
+					db.updateOrderStatus(Integer.parseInt(orderId), newStatus);
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "order id must be a number");
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "declined");
+				}
+			}
+		});
 		btnNewButton_1.setBounds(250, 203, 197, 29);
 		orderPanel.add(btnNewButton_1);
 		
@@ -138,6 +214,12 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtDeliveryId.setColumns(10);
 		
 		JButton btnFulfillDelivery = new JButton("Fulfill delivery");
+		btnFulfillDelivery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String did = txtDeliveryId.getText();
+				db.fulfillDelivery(Integer.parseInt(did));
+			}
+		});
 		btnFulfillDelivery.setBounds(189, 128, 117, 29);
 		deliveryPanel.add(btnFulfillDelivery);
 		
@@ -147,27 +229,27 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		//if (isManager) {
 			addTab("Add/Delete", null, addPanel, null);
 			addPanel.setLayout(null);
-		//}
-		
-		txtMenuId = new JTextField();
-		txtMenuId.setBounds(6, 6, 92, 28);
-		txtMenuId.setText("menu id");
-		addPanel.add(txtMenuId);
-		txtMenuId.setColumns(10);
 		
 		txtItemName = new JTextField();
 		txtItemName.setText("item name");
-		txtItemName.setBounds(110, 6, 176, 28);
+		txtItemName.setBounds(6, 6, 206, 28);
 		addPanel.add(txtItemName);
 		txtItemName.setColumns(10);
 		
 		txtPrice = new JTextField();
 		txtPrice.setText("price");
-		txtPrice.setBounds(298, 6, 60, 28);
+		txtPrice.setBounds(224, 6, 60, 28);
 		addPanel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
 		JButton btnAddItem = new JButton("add item");
+		btnAddItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = txtItemName.getText();
+				String price = txtPrice.getText();
+				db.addItem(item, Double.parseDouble(price));
+			}
+		});
 		btnAddItem.setBounds(422, 7, 117, 29);
 		addPanel.add(btnAddItem);
 		
@@ -191,12 +273,23 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		txtLocation = new JTextField();
 		txtLocation.setText("Location");
-		txtLocation.setBounds(224, 46, 154, 28);
+		txtLocation.setBounds(224, 46, 134, 28);
 		addPanel.add(txtLocation);
 		txtLocation.setColumns(10);
 		
 		JButton btnAddStore = new JButton("add store");
-		btnAddStore.setBounds(422, 47, 117, 29);
+		btnAddStore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String storeId = txtStoreId.getText();
+				String city = txtStoreId.getText();
+				String province = txtProvince.getText();
+				String location = txtLocation.getText();
+				String menuId = txtMenuId.getText();
+				String managerId = txtManagerId.getText();
+				db.addStore(Integer.parseInt(storeId), city, province, location, Integer.parseInt(managerId), Integer.parseInt(menuId));
+			}
+		});
+		btnAddStore.setBounds(428, 72, 117, 29);
 		addPanel.add(btnAddStore);
 		
 		txtEmployeeName = new JTextField();
@@ -218,14 +311,24 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtEmployeeid.setColumns(10);
 		
 		JButton btnAddNewEmployee = new JButton("Add new employee");
+		btnAddNewEmployee.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = txtEmployeeName.getText();
+				String gender = txtGender.getText();
+				int empID = Integer.parseInt(txtEmployeeid.getText());
+				int managerID = Integer.parseInt(txtManagerId_1.getText());
+				int storeID = Integer.parseInt(txtStoreId_1.getText());
+				db.addRegularEmployee(name, gender, storeID, managerID, empID);
+			}
+		});
 		btnAddNewEmployee.setBounds(351, 141, 188, 29);
 		addPanel.add(btnAddNewEmployee);
 		
-		txtManagerid = new JTextField();
-		txtManagerid.setText("manager ID");
-		txtManagerid.setBounds(16, 141, 134, 28);
-		addPanel.add(txtManagerid);
-		txtManagerid.setColumns(10);
+		txtManagerId_1 = new JTextField();
+		txtManagerId_1.setText("manager ID");
+		txtManagerId_1.setBounds(16, 141, 134, 28);
+		addPanel.add(txtManagerId_1);
+		txtManagerId_1.setColumns(10);
 		
 		txtStoreId_1 = new JTextField();
 		txtStoreId_1.setText("store ID");
@@ -252,6 +355,14 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtServeEndTime.setColumns(10);
 		
 		btnAddMenu = new JButton("add menu");
+		btnAddMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int menuID = Integer.parseInt(txtMenuId.getText());
+				int serveStartTime = Integer.parseInt(txtServeStartTime.getText());
+				int serveEndTime = Integer.parseInt(txtServeEndTime.getText());
+				db.addMenu(menuID, serveStartTime, serveEndTime);
+			}
+		});
 		btnAddMenu.setBounds(422, 182, 117, 29);
 		addPanel.add(btnAddMenu);
 		
@@ -262,8 +373,26 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		txtMenuIdToDelete.setColumns(10);
 		
 		btnDeleteMenu = new JButton("delete menu");
+		btnDeleteMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int menuID = Integer.parseInt(txtMenuIdToDelete.getText());
+				db.deleteMenu(menuID);
+			}
+		});
 		btnDeleteMenu.setBounds(170, 213, 117, 29);
 		addPanel.add(btnDeleteMenu);
+		
+		txtMenuId = new JTextField();
+		txtMenuId.setText("menu ID");
+		txtMenuId.setBounds(368, 46, 68, 28);
+		addPanel.add(txtMenuId);
+		txtMenuId.setColumns(10);
+		
+		txtManagerId = new JTextField();
+		txtManagerId.setText("manager id");
+		txtManagerId.setBounds(448, 46, 91, 28);
+		addPanel.add(txtManagerId);
+		txtManagerId.setColumns(10);
 		
 		AdditionalInfoPanel = new JPanel();
 		AdditionalInfoPanel.setBackground(new Color(240, 248, 255));

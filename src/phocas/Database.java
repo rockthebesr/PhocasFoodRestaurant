@@ -61,7 +61,6 @@ public class Database {
     
     public void makeInStoreOrder(String itemName, int storeID, int empID) throws SQLException {
         try {
-            
             ResultSet rs = this.query("Select stock from item where itemName = '" + itemName + "'");
             int stock = 0;
             if (rs.next()) {
@@ -92,7 +91,6 @@ public class Database {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Order declined");
         }
-
     }
 
     public void fulfillInStoreOrder(int orderID) throws SQLException {
