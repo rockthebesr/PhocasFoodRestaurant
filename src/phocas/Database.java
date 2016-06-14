@@ -249,9 +249,9 @@ public class Database {
     public void addStore(int storeID, String city, String province, String location, int managerID, int menuID) {
         
         this.update("Insert into store values(" + storeID +
-                ", '" + city + "', '" + province + "', '" + location + "')");
+                ", '" + city + "', '" + province + "', '" + location + "'," + managerID + ")");
         this.update("Insert into manages values(" + managerID + ", " + storeID + ")");
-        this.update("Insert into manages values(" + storeID + ", " + menuID + ")");
+        this.update("Insert into storeHasMenus values(" + storeID + ", " + menuID + ")");
         JOptionPane.showMessageDialog(null, "Store has been added");
     }
 
