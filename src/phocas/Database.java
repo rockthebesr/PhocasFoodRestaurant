@@ -37,7 +37,7 @@ public class Database {
 		}
     }
 
-    public ResultSet query(String queryString) {
+    private ResultSet query(String queryString) {
     	  ResultSet rs = null;
           try {
               rs = stmt.executeQuery(queryString);
@@ -333,16 +333,16 @@ public class Database {
 		update(query);
 	}
     
-	public ResultSet queryItem(boolean itemName, boolean stock, boolean price, String condition){
-		String query=projectItem(itemName, stock, price)+" FROM item ";
+	public ResultSet generalQuery(String select,String from, String condition){
+		String query=project(select)+" FROM " + from;
 		if(!condition.equals(""))
-			query = query+selectItem(condition);
+			query = query+select(condition);
 		ResultSet rs = query(query);
 		return rs;
 		//need to output this
 	}
 	
-	private String selectItem(String condition){
+	private String select(String condition){
 		String query="";
 		if(!(condition.equals(""))){
 			query= "WHERE "+condition;
@@ -350,24 +350,8 @@ public class Database {
 		return query;
 	}
 	
-	private String projectItem(boolean itemName, boolean stock, boolean price){
-		String itemNameStr=" ", stockStr= " ", priceStr = " ";
-		if(itemName) itemNameStr = "itemName ";
-		if(stock) {
-			if(itemName)
-			stockStr =",stock ";
-			else{
-				stockStr= "stock ";
-			}
-		}
-		if(price) {
-			if(itemName||stock){
-				priceStr=",price ";
-			}else{
-			priceStr ="price ";
-			}
-		}
-		String query= "SELECT "+itemNameStr+stockStr+priceStr;
+	private String project(String select){
+		String query= "SELECT "+select;
 		return query;
 	}
 	//show sales of each store

@@ -435,8 +435,8 @@ public class EmployeeActionsPanel extends JTabbedPane {
 				String attributes = textField.getText();
 				String tables = textField_1.getText();
 				String condition = textField_2.getText();
-				String q = "select " + attributes + " from " + tables + " where " + condition;
-				ResultSet rs = db.query(q);
+				//String q = "select " + attributes + " from " + tables + " where " + condition;
+				ResultSet rs = db.generalQuery(attributes, tables, condition);
 				String s = db.resultSetToString(rs);
 				JOptionPane.showMessageDialog(null, s);
 			}
