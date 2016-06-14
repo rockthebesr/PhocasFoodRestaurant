@@ -95,13 +95,13 @@ public class Database {
 
     public void fulfillInStoreOrder(int orderID) throws SQLException {
         
-        this.update("Update allOrders set orderStatus = 'finished' where orderID = " + orderID);
+        this.update("Update allOrder set orderStatus = 'finished' where orderID = " + orderID);
         JOptionPane.showMessageDialog(null, "Order Finished");
     }
 
     public void cancelInStoreOrder(int orderID) throws SQLException {
             
-            this.update("Update allOrders set orderStatus = 'cancelled' where orderID = " + orderID);
+            this.update("Update allOrder set orderStatus = 'cancelled' where orderID = " + orderID);
             JOptionPane.showMessageDialog(null, "Order Cancelled");
 
     }
