@@ -278,6 +278,7 @@ public class Database {
     	try {
     		while(rs.next()) {
     			JOptionPane.showMessageDialog(null, "Welcome, " + rs.getString("ename"));
+    			b = true;
     		}
     	} catch(SQLException e) {
     		b = false;
