@@ -380,7 +380,7 @@ public class Database {
 	//sales of each province
 	public ResultSet SaleOfEachProvince(){
 		ResultSet rs = null;
-		String query ="Select Province, SUM(price) From allOrder Group By Province";
+		String query ="Select Province, SUM(price) From allOrder a, store s where a.storeID = s.storeID Group By Province";
 		rs=query(query);
 		return rs;
 	}
