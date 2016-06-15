@@ -1,3 +1,6 @@
 *PrivateInfo.java
 *PrivateInfo.class
 *.classpath
+*dropTables.sql
+*tableCreation.sql
+*tableInsertion.sql
