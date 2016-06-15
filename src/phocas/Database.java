@@ -172,7 +172,7 @@ public class Database {
         try {
             
             this.update("Update delivery set deliveryStatus = 'delivered' where deliveryID = " + deliveryID);
-            ResultSet rs = this.query("Select orderID from deliver where deliveryID = " + deliveryID);
+            ResultSet rs = this.query("Select orderID from delivers where deliveryID = " + deliveryID);
             int orderID = 0;
             if (rs.next()) {
                 orderID = rs.getInt(1);
