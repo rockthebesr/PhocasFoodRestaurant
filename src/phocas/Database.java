@@ -55,6 +55,7 @@ public class Database {
             stmt.clearBatch();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Update failed");
+            e.printStackTrace();
         }
     }
     
@@ -80,7 +81,7 @@ public class Database {
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
             }
-            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss a");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm:ss a");
             java.util.Date date = new java.util.Date();
             String str = "TO_DATE('" + dateFormat.format(date) + "', 'DD/MON/YY HH:MI:SSAM')";
             this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + str + ", " + price +
@@ -129,7 +130,7 @@ public class Database {
             if (rs.next()) {
                 price = rs.getInt(1) + 1;
             }
-            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss a");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm:ss a");
             java.util.Date date = new java.util.Date();
             String str = "TO_DATE('" + dateFormat.format(date) + "', 'DD/MON/YY HH:MI:SSAM')";
             this.update("insert into allOrder values(" + orderID + ", " + storeID + ", " + str + ", " + price +
@@ -153,8 +154,10 @@ public class Database {
             if (rs.next()) {
                 deliveryID = rs.getInt(1) + 1;
             }
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            this.update("Insert into delivery values(" + deliveryID + ", " + dateFormat + ", 'out on delivery')");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm:ss a");
+            java.util.Date date = new java.util.Date();
+            String str = "TO_DATE('" + dateFormat.format(date) + "', 'DD/MON/YY HH:MI:SSAM')";
+            this.update("Insert into delivery values(" + deliveryID + ", " + str + ", 'out on delivery')");
             this.update("Insert into delivers values(" + deliveryID + ", " + orderID + ")");
             rs = this.query("Select itemName from orders where orderID = " + orderID);
             String itemName = null;
