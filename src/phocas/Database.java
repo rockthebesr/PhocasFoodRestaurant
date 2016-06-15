@@ -190,30 +190,44 @@ public class Database {
 
     public void updateOrderStatus(int orderID, String new_status) throws SQLException {
         try {
-            
+
+
             ResultSet rs = this.query("Select orderStatus from allOrder where orderID = " + orderID);
+
+
             String check = null;
+
+
+            if (!new_status.equals("in preparation") && !new_status.equals("cancelled") && !new_status.equals("finished") &&
+                    !new_status.equals("delivered") && !new_status.equals("out on delivery")) {
+
+
+                throw new SQLException();
+            }
             if (rs.next()) {
                 check = rs.getString(1);
             }
-            if (check == "Delivered" || check == "Finished" || check == "Cancelled") {
-                JOptionPane.showMessageDialog(null, "Declined");
-                return;
+            if (!check.equals("delivered") || !check.equals("finished") || !check.equals("cancelled") ) {
+                throw new SQLException();
             }
             String checkInStore = null;
             rs = this.query("Select * from inStoreOrder where orderID = " + orderID);
             if (rs.next()) {
                 checkInStore = rs.getString(1);
             }
-            if (checkInStore != null && new_status == "Delivered") {
-                JOptionPane.showMessageDialog(null, "Declined");
-                return;
+            if (checkInStore != null && !new_status.equals("delivered")) {
+                throw new SQLException();
             }
+
             this.update("update allOrder set orderStatus = '" + new_status + "' where orderID = " + orderID);
+
+
             JOptionPane.showMessageDialog(null, "Order " + orderID + " has been updated to " + new_status);
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Declined");
         }
+
     }
 
     public void deleteOnlinePurchase(int orderID) {
