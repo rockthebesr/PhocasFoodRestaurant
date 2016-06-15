@@ -56,11 +56,14 @@ public class EmployeeActionsPanel extends JTabbedPane {
 	private JButton btnLeastExpensiveItem;
 	private JTextField txtMenuId;
 	private JTextField txtManagerId;
+    private JTextField txtRegularEmployeeToDelete;
+    private JButton btnDeleteEmployee;
+
 
 	/**
 	 * Create the panel.
 	 */
-	public EmployeeActionsPanel(Database db, Boolean isManager, int storeID, int empID) {
+	public EmployeeActionsPanel(final Database db, Boolean isManager,final int storeID,final int empID) {
 		
 		JPanel orderPanel = new JPanel();
 		orderPanel.setBackground(new Color(240, 248, 255));
@@ -244,12 +247,12 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JButton btnAddItem = new JButton("add item");
 		btnAddItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String item = txtItemName.getText();
-				String price = txtPrice.getText();
-				db.addItem(item, Double.parseDouble(price));
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                String item = txtItemName.getText();
+                String price = txtPrice.getText();
+                db.addItem(item, Double.parseDouble(price));
+            }
+        });
 		btnAddItem.setBounds(422, 7, 117, 29);
 		addPanel.add(btnAddItem);
 		
@@ -279,16 +282,16 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JButton btnAddStore = new JButton("add store");
 		btnAddStore.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String storeId = txtStoreId.getText();
-				String city = txtStoreId.getText();
-				String province = txtProvince.getText();
-				String location = txtLocation.getText();
-				String menuId = txtMenuId.getText();
-				String managerId = txtManagerId.getText();
-				db.addStore(Integer.parseInt(storeId), city, province, location, Integer.parseInt(managerId), Integer.parseInt(menuId));
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                String storeId = txtStoreId.getText();
+                String city = txtStoreId.getText();
+                String province = txtProvince.getText();
+                String location = txtLocation.getText();
+                String menuId = txtMenuId.getText();
+                String managerId = txtManagerId.getText();
+                db.addStore(Integer.parseInt(storeId), city, province, location, Integer.parseInt(managerId), Integer.parseInt(menuId));
+            }
+        });
 		btnAddStore.setBounds(428, 72, 117, 29);
 		addPanel.add(btnAddStore);
 		
@@ -312,15 +315,15 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JButton btnAddNewEmployee = new JButton("Add new employee");
 		btnAddNewEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String name = txtEmployeeName.getText();
-				String gender = txtGender.getText();
-				int empID = Integer.parseInt(txtEmployeeid.getText());
-				int managerID = Integer.parseInt(txtManagerId_1.getText());
-				int storeID = Integer.parseInt(txtStoreId_1.getText());
-				db.addRegularEmployee(name, gender, storeID, managerID, empID);
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                String name = txtEmployeeName.getText();
+                String gender = txtGender.getText();
+                int empID = Integer.parseInt(txtEmployeeid.getText());
+                int managerID = Integer.parseInt(txtManagerId_1.getText());
+                int storeID = Integer.parseInt(txtStoreId_1.getText());
+                db.addRegularEmployee(name, gender, storeID, managerID, empID);
+            }
+        });
 		btnAddNewEmployee.setBounds(351, 141, 188, 29);
 		addPanel.add(btnAddNewEmployee);
 		
@@ -356,13 +359,13 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		btnAddMenu = new JButton("add menu");
 		btnAddMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int menuID = Integer.parseInt(txtMenuId_1.getText());
-				int serveStartTime = Integer.parseInt(txtServeStartTime.getText());
-				int serveEndTime = Integer.parseInt(txtServeEndTime.getText());
-				db.addMenu(menuID, serveStartTime, serveEndTime);
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                int menuID = Integer.parseInt(txtMenuId_1.getText());
+                int serveStartTime = Integer.parseInt(txtServeStartTime.getText());
+                int serveEndTime = Integer.parseInt(txtServeEndTime.getText());
+                db.addMenu(menuID, serveStartTime, serveEndTime);
+            }
+        });
 		btnAddMenu.setBounds(422, 182, 117, 29);
 		addPanel.add(btnAddMenu);
 		
@@ -381,6 +384,22 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		});
 		btnDeleteMenu.setBounds(170, 213, 117, 29);
 		addPanel.add(btnDeleteMenu);
+
+        	txtRegularEmployeeToDelete = new JTextField();
+        	txtRegularEmployeeToDelete.setText("condition to delete");
+        	txtRegularEmployeeToDelete.setBounds(13, 245, 180, 28);
+        	addPanel.add(txtRegularEmployeeToDelete);
+        	txtRegularEmployeeToDelete.setColumns(10);
+
+        	btnDeleteEmployee = new JButton("delete employee");
+        	btnDeleteEmployee.addActionListener(new ActionListener() {
+            		public void actionPerformed(ActionEvent e) {
+                	String str = txtRegularEmployeeToDelete.getText();
+                	db.deleteEmployee(str);
+            	}
+        	});
+		btnDeleteEmployee.setBounds(230, 245, 180, 29);
+        	addPanel.add(btnDeleteEmployee);
 		
 		txtMenuId = new JTextField();
 		txtMenuId.setText("menu ID");
@@ -517,5 +536,6 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		AdditionalInfoPanel.add(btnLeastExpensiveItem);
 
 	}
+
 	
 }
