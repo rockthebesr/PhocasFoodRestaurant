@@ -336,7 +336,7 @@ public class Database {
 	public ResultSet generalQuery(String select,String from, String condition){
 		String query=project(select)+" FROM " + from;
 		if(!condition.equals(""))
-			query = query+select(condition);
+			query = query+" "+select(condition);
 		ResultSet rs = query(query);
 		return rs;
 		//need to output this
