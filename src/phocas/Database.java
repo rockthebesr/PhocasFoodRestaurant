@@ -262,7 +262,7 @@ public class Database {
             
             ResultSet rs = this.query("Select storeID from store where storeID = " + storeID);
             rs.next();
-            rs = this.query("Select managerID from manager where storeID = " + storeID);
+            rs = this.query("Select empID from manager where empID = " + managerID);
             rs.next();
              this.update("Insert into employee values(" + empID + " ,'" + name + "' ,'" + gender + "')");
              this.update("Insert into regularEmployee values(" + empID + " ," + storeID + " ," + managerID + ")");
