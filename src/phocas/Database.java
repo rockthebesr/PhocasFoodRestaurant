@@ -226,13 +226,13 @@ public class Database {
     }
 
     public void checkOrderStatus(int orderID) {
-        try {
             
-            ResultSet rs = this.query("Select orderStatus from allOrders where orderID = " + orderID);
+            ResultSet rs = this.query("Select orderStatus from allOrder where orderID = " + orderID);
             String orderStatus = null;
-            if (rs.next()) {
-                orderStatus = rs.getString(1);
-            }
+             try {
+                if (rs.next()) {
+                    orderStatus = rs.getString(1);
+                }
             JOptionPane.showMessageDialog(null, "The order status is : " + orderStatus);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Order not found");
