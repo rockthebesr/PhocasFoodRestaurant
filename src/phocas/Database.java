@@ -269,6 +269,7 @@ public class Database {
             rs.next();
              this.update("Insert into employee values(" + empID + " ,'" + name + "' ,'" + gender + "')");
              this.update("Insert into regularEmployee values(" + empID + " ," + storeID + " ," + managerID + ")");
+             JOptionPane.showMessageDialog(null, "Employee " + empID + " added.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Store or manager doesn't exist.");
         }
