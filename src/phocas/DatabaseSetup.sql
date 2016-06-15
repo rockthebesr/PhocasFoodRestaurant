@@ -71,18 +71,18 @@ create table regularEmployee(
 
 create table manages(
 	empID integer primary key,
-	storeID integer /*not null*/,
+	storeID integer not null,
 	foreign key (empID) references manager ON DELETE CASCADE,
 	foreign key (storeID) references store ON DELETE CASCADE);
 
 
 create table allOrder(
 	orderID integer primary key,
-	storeID integer /*not null*/,
+	storeID integer not null,
 	orderDate date,
 	price number(10,4),
 	orderStatus varchar(20) CHECK (orderStatus IN ('in preparation', 'out on delivery', 'delivered', 'finished', 'cancelled')),
-	empID integer /*not null*/,
+	empID integer not null,
 	foreign key (storeID) references store ON DELETE CASCADE,
 	foreign key (empID) references employee ON DELETE SET NULL);
 
@@ -111,7 +111,7 @@ create table deliveryHasItems(
           
 create table delivers(
 	deliveryID integer primary key,
-	orderID integer /*not null*/,
+	orderID integer not null,
 	foreign key (deliveryID) references delivery ON DELETE CASCADE,
 	foreign key (orderID) references allOrder ON DELETE CASCADE);
 
