@@ -335,6 +335,7 @@ public class Database {
     public void deleteEmployee(String Condition){
 		String query= "DELETE FROM employee WHERE "+Condition;
 		update(query);
+		JOptionPane.showMessageDialog(null, Condition + " has been deleted");
 	}
     
 	public ResultSet generalQuery(String select,String from, String condition){
