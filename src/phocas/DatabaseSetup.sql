@@ -82,9 +82,9 @@ create table allOrder(
 	orderDate date,
 	price number(10,4),
 	orderStatus varchar(20) CHECK (orderStatus IN ('in preparation', 'out on delivery', 'delivered', 'finished', 'cancelled')),
-	empID integer not null,
+	empID integer,
 	foreign key (storeID) references store ON DELETE CASCADE,
-	foreign key (empID) references employee);
+	foreign key (empID) references employee ON DELETE SET NULL);
 
 create table inStoreOrder(
 	orderID integer primary key,
