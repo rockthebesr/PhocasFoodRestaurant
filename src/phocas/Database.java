@@ -207,17 +207,6 @@ public class Database {
             if (rs.next()) {
                 check = rs.getString(1);
             }
-            if (!check.equals("delivered") || !check.equals("finished") || !check.equals("cancelled") ) {
-                throw new SQLException();
-            }
-            String checkInStore = null;
-            rs = this.query("Select * from inStoreOrder where orderID = " + orderID);
-            if (rs.next()) {
-                checkInStore = rs.getString(1);
-            }
-            if (checkInStore != null && !new_status.equals("delivered")) {
-                throw new SQLException();
-            }
 
             this.update("update allOrder set orderStatus = '" + new_status + "' where orderID = " + orderID);
 

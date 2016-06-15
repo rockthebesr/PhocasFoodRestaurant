@@ -12,7 +12,7 @@ import java.sql.Statement;
 public class Phocas {
 
 	public static void main(String[] args) throws SQLException {
-		//ssh CSID@remote.ugrad.cs.ubc.ca -L 1522:dbhost.ugrad.cs.ubc.ca:1522
+		//ssh k0a9@remote.ugrad.cs.ubc.ca -L 1522:dbhost.ugrad.cs.ubc.ca:1522
 		Database db = new Database();
 		PhocasGUI gui = new PhocasGUI(db);
 		gui.run();
