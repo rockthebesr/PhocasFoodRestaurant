@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EmployeeActionsPanel extends JTabbedPane {
 	
@@ -228,10 +230,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		JPanel addPanel = new JPanel();
 		addPanel.setBackground(new Color(240, 248, 255));
-		//TODO
-		//if (isManager) {
+		if (isManager) {
 			addTab("Add/Delete", null, addPanel, null);
 			addPanel.setLayout(null);
+		}
 		
 		txtItemName = new JTextField();
 		txtItemName.setText("item name");
@@ -415,11 +417,10 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		
 		AdditionalInfoPanel = new JPanel();
 		AdditionalInfoPanel.setBackground(new Color(240, 248, 255));
-		//TODO
-		//if (isManager) {
+		if (isManager) {
 			addTab("Additional Info", null, AdditionalInfoPanel, null);
 			AdditionalInfoPanel.setLayout(null);
-		//}
+		}
 		
 		JLabel lblSelect = new JLabel("find");
 		lblSelect.setBounds(6, 6, 43, 16);
@@ -448,8 +449,20 @@ public class EmployeeActionsPanel extends JTabbedPane {
 		AdditionalInfoPanel.add(textField_2);
 		textField_2.setColumns(10);
 		
-		JButton btnRun = new JButton("run");
-		btnRun.addActionListener(new ActionListener() {
+		JButton btnRunQuery = new JButton("run");
+		btnRunQuery.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String attributes = textField.getText();
+				String tables = textField_1.getText();
+				String condition = textField_2.getText();
+				//String q = "select " + attributes + " from " + tables + " where " + condition;
+				ResultSet rs = db.generalQuery(attributes, tables, condition);
+				String s = db.resultSetToString(rs);
+				JOptionPane.showMessageDialog(null, s);
+			}
+		});
+		btnRunQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String attributes = textField.getText();
 				String tables = textField_1.getText();
@@ -460,8 +473,8 @@ public class EmployeeActionsPanel extends JTabbedPane {
 				JOptionPane.showMessageDialog(null, s);
 			}
 		});
-		btnRun.setBounds(192, 25, 117, 29);
-		AdditionalInfoPanel.add(btnRun);
+		btnRunQuery.setBounds(181, 26, 117, 29);
+		AdditionalInfoPanel.add(btnRunQuery);
 		
 		btnFindAllEmployee = new JButton("Find all employee ids working at this store");
 		btnFindAllEmployee.addActionListener(new ActionListener() {
